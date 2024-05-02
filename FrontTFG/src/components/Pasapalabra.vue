@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
 import PreguntaPasapalabra from './PreguntaPasapalabra.vue';
 import { pasapalabraStore } from '@/stores/storePasapalabra';
 import vueDebounce, { debounce } from 'vue-debounce'
@@ -43,6 +43,8 @@ function functionTestEnter(value: string) {
         toast.success('!CORRECTO!')
         nextQuestion()
         inputValue.value = '';
+    } else if (value.trim().toLowerCase() === '') {
+        nextQuestion()
     } else {
         props.preguntas[idFirstQuestion.value].acertado = false;
         props.preguntas[idFirstQuestion.value].contestado = true;
@@ -66,8 +68,6 @@ const handleInputChangeDebounced = debounce((value: string) => {
         inputValue.value = '';
     }
 }, 200)
-
-
 
 </script>
 
