@@ -8,6 +8,8 @@ const props = defineProps<{
 </script>
 
 <template>
-    <p>{{ id }}</p>
+    <!-- <p>{{ id }}</p> -->
     <p>{{ nombreAsignatura }}</p>
+    <RouterLink  :to="'/asignatura/'+ id"><button>JUEGOS</button></RouterLink>
+
 </template>
