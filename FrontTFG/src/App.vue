@@ -15,7 +15,8 @@ import Curso from './views/CursosView.vue'
 </template> -->
 
 <template>
-        <RouterLink to="/curso">Jugar</RouterLink>
+        <RouterLink to="/curso">Curso</RouterLink>
+
         <RouterView></RouterView>
     
 </template>

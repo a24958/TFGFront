@@ -19,8 +19,8 @@ const props = defineProps<{
 
 <template>
     <div>
-        <p>{{ id }}</p>
-        <p> {{ nombreCurso }}</p>
+        <p>{{ nombreCurso }}</p>
+        <RouterLink  :to="'/curso/'+ id"><button>ASIGNATURAS</button></RouterLink>
     </div>
 </template>
 
