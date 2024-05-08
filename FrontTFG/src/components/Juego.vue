@@ -3,7 +3,8 @@
 const props = defineProps<{
     id: number,
     temaJuego: string,
-    codigo: string
+    codigo: string,
+    tipoJuego: number
 }>()
 
 </script>
@@ -11,6 +12,8 @@ const props = defineProps<{
 <template>
     <!-- <p>{{ id }}</p> -->
     <p>{{ temaJuego }}</p>
-    <!-- <RouterLink  :to="'/asignatura/'+ id"><button>JUEGOS</button></RouterLink> -->
+    <div v-if="tipoJuego==1">
+        <RouterLink  :to="'/pasapalabra/'+ id"><button>JUEGOS</button></RouterLink>
+    </div>
 
 </template>

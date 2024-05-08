@@ -11,12 +11,14 @@ interface Juego {
 interface AsignaturaJuego {
     id: number,
     juegoAsignatura: string,
+    tipoJuego: number,
     juegos: Juego[]
 }
 
 const curso = ref<AsignaturaJuego>({
     id: 0,
     juegoAsignatura: '',
+    tipoJuego:0,
     juegos: []
 });
 
@@ -54,6 +56,7 @@ export const juegoStore = defineStore('juegoFunctions', () => {
             const mappedData = [{
                 "id": json["id"],
                 "juegoAsignatura": json["juegoAsignatura"],
+                "tipoJuego": json["tipoJuego"],
                 "juegos": json["juegos"] || [],
             }];
             setData(mappedData);

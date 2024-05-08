@@ -13,8 +13,8 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/pasapalabra',
-      name: 'home',
+      path: '/pasapalabra/:id',
+      name: 'pasapalabra-id',
       component: PasapalabraView
     },
     {

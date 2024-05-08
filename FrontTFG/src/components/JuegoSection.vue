@@ -21,14 +21,15 @@ const { seatData: data } = storeToRefs(store);
 interface AsignaturaJuego {
     id: number,
     juegoAsignatura: string,
+    tipoJuego: number,
+
     juegos: Juego[]
 }
 
 interface Juego {
     id: number;
     temaJuego: string,
-    codigo: string
-
+    codigo: string,
 }
 
 
@@ -44,7 +45,7 @@ interface Juego {
             <h1>JUEGOS DISPONIBLES</h1>
             <div v-for="element in data" :key="element.id" class="sessionContainerItem">
                 <Juego v-for="juego in element.juegos" :key="juego.id" :id="juego.id"
-                    :temaJuego="juego.temaJuego" :codigo="juego.codigo">
+                    :temaJuego="juego.temaJuego" :codigo="juego.codigo" :tipoJuego="element.tipoJuego">
                 </Juego>
             </div>
         </div>

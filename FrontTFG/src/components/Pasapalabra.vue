@@ -5,9 +5,11 @@ import { pasapalabraStore } from '@/stores/storePasapalabra';
 import vueDebounce, { debounce } from 'vue-debounce'
 import { useToast } from 'vue-toast-notification';
 
+
 const vDebounce = vueDebounce({ lock: true })
 const toast = useToast();
 const store = pasapalabraStore();
+
 
 interface PreguntaPasapalabra {
     id: number,
@@ -23,6 +25,8 @@ const props = defineProps<{
     name: string,
     preguntas: PreguntaPasapalabra[]
 }>()
+
+
 
 const idFirstQuestion = ref(0)
 const inputValue = ref('');

@@ -26,7 +26,7 @@ export const pasapalabraStore = defineStore('pasapalabraStore', () => {
         seatData.value = newData
     }
 
-    async function getPasapalabraById() {
+    async function getPasapalabraById(Id: string) {
         const requestOptions: RequestInit = {
             method: 'GET',
             mode: 'cors',
@@ -36,7 +36,7 @@ export const pasapalabraStore = defineStore('pasapalabraStore', () => {
         };
 
         try {
-            const response = await fetch(`http://localhost:5183/Pasapalabra/1`, requestOptions);
+            const response = await fetch(`http://localhost:5183/Pasapalabra/${parseInt(Id)}`, requestOptions);
 
             if (!response.ok) {
                 throw new Error('Error en la solicitud: ' + response.statusText);
