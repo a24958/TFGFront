@@ -16,6 +16,8 @@ import Curso from './views/CursosView.vue'
 
 <template>
         <RouterLink to="/curso">Curso</RouterLink>
+        <RouterLink to="/login">Login</RouterLink>
+        <RouterLink to="/register">Register</RouterLink>
 
         <RouterView></RouterView>
     

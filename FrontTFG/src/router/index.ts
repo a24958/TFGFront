@@ -4,6 +4,8 @@ import CursoView from '@/views/CursosView.vue'
 import AsignaturasView from '@/views/AsignaturasView.vue'
 import AsignaturasJuegosView from '@/views/AsignaturasJuegosView.vue'
 import JuegosView from '@/views/JuegosView.vue'
+import LoginView from '@/views/LoginView.vue'
+import RegisterView from '@/views/RegisterView.vue'
 
 
 
@@ -50,6 +52,22 @@ const router = createRouter({
       meta: {
         showHeader: true,
         requiresFetch: true
+      }
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: LoginView,
+      meta: {
+        showHeader: true,
+      }
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: RegisterView,
+      meta: {
+        showHeader: true,
       }
     },
   ]
