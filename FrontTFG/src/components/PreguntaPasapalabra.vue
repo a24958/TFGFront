@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import MoonSvg from './MoonSvg.vue';
 const props = defineProps<{
     id: number,
     pregunta: string,
@@ -11,10 +12,20 @@ const props = defineProps<{
 
 <template>
     <div>
-        <p>{{ letra }}</p>
-        <p>{{ pregunta }}</p>
-        <p>{{ respuesta }}</p>
+       <MoonSvg :letra="letra"></MoonSvg>
     </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+div{
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: center;
+   border: 1px solid black;
+   height: 32px;
+   width: 32px;
+   border-radius: 50%;
+}
+
+</style>
