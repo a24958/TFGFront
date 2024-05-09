@@ -1,8 +1,13 @@
 <script setup lang="ts">
-import CourseSelector from './components/CourseSelector.vue'
-import GameSelector from './components/GameSelector.vue'
-import Curso from './views/CursosView.vue'
 
+var userData = localStorage.getItem('userData');
+var rol = ''
+var nombre = ''
+if (userData != null){
+    rol = JSON.parse(userData).rol;
+    nombre = JSON.parse(userData).nombre;
+
+}
 </script>
 
 <!-- <template>
@@ -15,12 +20,33 @@ import Curso from './views/CursosView.vue'
 </template> -->
 
 <template>
+    <header >
         <RouterLink to="/curso">Curso</RouterLink>
-        <RouterLink to="/login">Login</RouterLink>
-        <RouterLink to="/register">Register</RouterLink>
+        <div v-if="rol !== 'Alumno'">
+            <RouterLink to="/login">Login</RouterLink>
+            <RouterLink to="/register">Register</RouterLink>
 
-        <RouterView></RouterView>
+        </div>
+        <div v-else>
+            <RouterLink  to="/login">Bienvenido {{ nombre }}</RouterLink>
+
+        </div>
+
+    </header>
+        
+    <RouterView></RouterView>
     
 </template>
 
-<style scoped></style>
+<style scoped>
+header{
+    display: flex;
+    justify-content: space-around;
+}
+
+div{
+    display: flex;
+    justify-content: space-around;
+
+}
+</style>

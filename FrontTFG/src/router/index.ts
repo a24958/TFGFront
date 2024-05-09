@@ -6,6 +6,8 @@ import AsignaturasJuegosView from '@/views/AsignaturasJuegosView.vue'
 import JuegosView from '@/views/JuegosView.vue'
 import LoginView from '@/views/LoginView.vue'
 import RegisterView from '@/views/RegisterView.vue'
+import IntranetView from '@/views/IntranetView.vue'
+
 
 
 
@@ -70,7 +72,50 @@ const router = createRouter({
         showHeader: true,
       }
     },
+    {
+      path: '/intranet',
+      name: 'intranet',
+      component: IntranetView,
+      meta: {
+        showHeader: false,
+        requiresAdmin: true, 
+        requiresAuth: true,
+      }
+    },
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  // Verifica si la ruta requiere autenticación y si el usuario tiene el rol adecuado
+  if (to.matched.some(record => record.meta.requiresAuth && record.meta.requiresAdmin)) {
+    const userData = localStorage.getItem('userData');
+    const rol = userData ? JSON.parse(userData).rol : null;
+
+    // Verifica si el usuario tiene el rol de administrador
+    if (rol !== 'Admin') {
+      next('/login');
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth && record.meta.requiresGuest)) {
+    const userData = localStorage.getItem('userData');
+    const rol = userData ? JSON.parse(userData).rol : null;
+
+    // Verifica si el usuario tiene el Guest de administrador
+    if (rol !== 'Guest') {
+      next('/login');
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
 
 export default router

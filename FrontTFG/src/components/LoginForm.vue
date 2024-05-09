@@ -17,7 +17,6 @@ async function login() {
     try {
         const userReturned = await store.getUser(userLogin, passwordLogin);
         if (userReturned && userReturned.email === userLogin) {
-            // Check user role and redirect accordingly
             // if (userReturned.rol === 'Admin') {
                 // await router.push('/intranet');
             // } else {

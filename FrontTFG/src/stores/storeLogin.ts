@@ -5,14 +5,16 @@ interface User {
     id: number,
     email: string,
     nombre: string,
-    avatar: string
+    avatar: string,
+    rol: string
 }
 
 const user = ref<User>({
     id: 0,
     email: '',
     nombre: '',
-    avatar: ''
+    avatar: '',
+    rol: ''
 });
 
 
@@ -57,20 +59,16 @@ export const loginStore = defineStore('loginFunctions', () => {
                     "id": json["id"],
                     "email": json["email"],
                     "nombre": json["nombre"],
-                    "avatar": json["avatar"]
+                    "avatar": json["avatar"],
+                    "rol": json["rol"]
             }
             console.log(userData);
 
             
             // Guardar datos en el Local Storage
             localStorage.setItem('userData', JSON.stringify(userData));
-            const mappedData = [{
-                "id": json["id"],
-                    "email": json["email"],
-                    "nombre": json["nombre"],
-                    "avatar": json["avatar"]
-            }];
-            setData(mappedData)
+
+            setData([userData])
             return userData;
 
         } catch (error) {
@@ -110,20 +108,15 @@ export const loginStore = defineStore('loginFunctions', () => {
                     "id": json["id"],
                     "email": json["email"],
                     "nombre": json["nombre"],
-                    "avatar": json["avatar"]
+                    "avatar": json["avatar"],
+                    "rol": json["rol"]
             }
             console.log(userData);
 
             
             // Guardar datos en el Local Storage
             localStorage.setItem('userData', JSON.stringify(userData));
-            const mappedData = [{
-                "id": json["id"],
-                    "email": json["email"],
-                    "nombre": json["nombre"],
-                    "avatar": json["avatar"]
-            }];
-            setData(mappedData)
+            setData([userData])
             return userData;
 
 
