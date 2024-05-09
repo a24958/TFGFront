@@ -23,7 +23,7 @@ async function register() {
     }
 
     const userReturned = await store.postUser(userRegister, emailRegister, passwordRegister);
-    if (userReturned == true) {
+    if (userReturned) {
         await router.push('/');
       } else {
         errorMessage.value = 'Error a la hora de registrar usuario';

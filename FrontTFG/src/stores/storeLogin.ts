@@ -104,7 +104,27 @@ export const loginStore = defineStore('loginFunctions', () => {
                 throw new Error('Error en la solicitud: ' + response.statusText);
             }
 
-            return true;
+            const json = await response.json();
+            console.log(json);
+            const userData = {
+                    "id": json["id"],
+                    "email": json["email"],
+                    "nombre": json["nombre"],
+                    "avatar": json["avatar"]
+            }
+            console.log(userData);
+
+            
+            // Guardar datos en el Local Storage
+            localStorage.setItem('userData', JSON.stringify(userData));
+            const mappedData = [{
+                "id": json["id"],
+                    "email": json["email"],
+                    "nombre": json["nombre"],
+                    "avatar": json["avatar"]
+            }];
+            setData(mappedData)
+            return userData;
 
 
         } catch (error) {
