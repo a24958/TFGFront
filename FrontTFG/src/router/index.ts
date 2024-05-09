@@ -6,6 +6,7 @@ import AsignaturasJuegosView from '@/views/AsignaturasJuegosView.vue'
 import JuegosView from '@/views/JuegosView.vue'
 import LoginView from '@/views/LoginView.vue'
 import RegisterView from '@/views/RegisterView.vue'
+import HomeView from '@/views/HomeView.vue'
 
 
 
@@ -15,14 +16,28 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
+      path: '/',
+      name: 'home',
+      component: HomeView,
+      meta: {
+        showHeader: true,
+      }
+    },
+    {
       path: '/pasapalabra/:id',
       name: 'pasapalabra-id',
-      component: PasapalabraView
+      component: PasapalabraView,
+      meta: {
+        showHeader: true,
+      }
     },
     {
       path: '/curso',
       name: 'curso',
-      component: CursoView
+      component: CursoView,
+      meta: {
+        showHeader: true,
+      }
     },
     {
       path: '/curso/:id',
