@@ -2,7 +2,8 @@
 import { loginStore } from '@/stores/storeLogin';
 import router from '@/router';
 import { ref } from 'vue';
-import { RouterLink } from 'vue-router'
+import { RouterLink } from 'vue-router';
+import Password from 'primevue/password';
 
 const store = loginStore();
 
@@ -19,16 +20,16 @@ async function register() {
   try {
     if (!user.value || !email.value || !password.value) {
       errorMessage.value = 'Todos los campos son obligatorios';
-      return; 
+      return;
     }
 
     const userReturned = await store.postUser(userRegister, emailRegister, passwordRegister);
     if (userReturned) {
-        await router.push('/');
-      } else {
-        errorMessage.value = 'Error a la hora de registrar usuario';
-        return;
-      }
+      await router.push('/');
+    } else {
+      errorMessage.value = 'Error a la hora de registrar usuario';
+      return;
+    }
 
   } catch (error) {
     errorMessage.value = 'Error a la hora de registrar usuario';
@@ -47,8 +48,12 @@ async function register() {
       <label for="email">Email</label>
       <input v-model="email" type="text" id="email" name="email" required>
 
-      <label for="contraseña">Contraseña</label>
-      <input v-model="password" type="password" id="contraseña" name="contraseña" required>
+      <label for="nombre">Contraseña</label>
+      <div class="card flex justify-content-center">
+        <br>
+        <Password v-model="password" toggleMask promptLabel="Escoje una constraseña" weakLabel="Contraseña Simple"
+          mediumLabel="Contraseña Normal" strongLabel="Contraseña Compleja" />
+      </div>
 
       <div class="error" v-if="errorMessage">{{ errorMessage }}</div>
 
@@ -156,4 +161,5 @@ async function register() {
   .login-section {
     margin-bottom: 325px;
   }
-}</style>
+}
+</style>
