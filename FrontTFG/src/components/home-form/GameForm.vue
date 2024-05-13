@@ -2,36 +2,33 @@
 import GameSelector from '@/components/home-form/GameSelector.vue';
 import ClearSelector from '@/components/home-form/ClearSelector.vue';
 import SubmitButton from '@/components/home-form/SubmitButton.vue';
+import Fieldset from 'primevue/fieldset';
+import { cursoStore } from '@/stores/storeCurso';
 import { ref } from 'vue';
+import { onBeforeMount } from 'vue';
+import { storeToRefs } from 'pinia';
+import { asignaturaJuegoStore } from '@/stores/storeAsignaturaJuego';
 
-//TODO WIP REMOVE ITS ONLY FOR TESTING
-const courses = ref([
-    { name: '1º Primaria' },
-    { name: '2º Primaria' },
-    { name: '3º Primaria' },
-    { name: '4º Primaria' },
-    { name: '5º Primaria' },
-    { name: '6º Primaria' },
-]);
+const cursosStore = cursoStore();
+const asignaturasStore = asignaturaJuegoStore();
 
-const subjects = ref([
-    { name: 'Lengua' },
-    { name: 'Matemáticas' },
-    { name: 'Inglés' },
-    { name: 'Historia' },
-    { name: 'Biología' },
-    { name: 'Geología' },
-]);
+onBeforeMount(async () => {
+    await cursosStore.getCursos();
+    await asignaturasStore.getAsignaturas();
+})
+const { seatData: cursosData } = storeToRefs(cursosStore);
+const { setAsignatuaJuegoData: asignaturasData } = storeToRefs(asignaturasStore);
 </script>
 
 <template>
-    <div class="gameForm-container">
-        <h1>BUSCAR JUEGOS</h1>
-        <GameSelector></GameSelector>
-        <ClearSelector :label-text="'Curso'" :item-list="courses"></ClearSelector>
-        <ClearSelector :label-text="'Asignatura'" :item-list="subjects"></ClearSelector>
-        <SubmitButton></SubmitButton>
-    </div>
+    <Fieldset legend="BUSCADOR" class="h1">
+        <div class="gameForm-container">
+            <GameSelector></GameSelector>
+            <ClearSelector :label-text="'Curso'" :item-list="cursosData"></ClearSelector>
+            <ClearSelector :label-text="'Asignatura'" :item-list="asignaturasData"></ClearSelector>
+            <SubmitButton></SubmitButton>
+        </div>
+    </Fieldset>
 </template>
 
 <style scoped>
@@ -40,10 +37,11 @@ const subjects = ref([
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    height: 350px;
+    height: 275px;
+    margin-top: 24px;
 }
 
-h1 {
+span {
     color: #3B82F6;
 }
 </style>
