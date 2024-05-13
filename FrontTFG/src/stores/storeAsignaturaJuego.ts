@@ -37,7 +37,6 @@ export const asignaturaJuegoStore = defineStore('asignaturaJuegoFunctions', () =
 
     function setAsignaturaData(newData: AsignaturaJuego[]) {
         setAsignatuaJuegoData.value = newData
-        console.log(setAsignatuaJuegoData)
     }
 
     async function getAsignaturas() {
@@ -57,7 +56,6 @@ export const asignaturaJuegoStore = defineStore('asignaturaJuegoFunctions', () =
             }
 
             const json = await response.json();
-            console.log(json)
             const mappedData: AsignaturaJuego[] = [];
 
             for (let index = 0; index < json.length; index++) {
@@ -67,8 +65,6 @@ export const asignaturaJuegoStore = defineStore('asignaturaJuegoFunctions', () =
                 })
 
             }
-
-            console.log(mappedData)
 
             setAsignaturaData(mappedData);
 
