@@ -7,33 +7,25 @@ interface Asignatura {
     nombreAsignatura: string
 }
 
-interface Curso {
-    id: number,
-    nombreCurso: string,
-    asignaturas: Asignatura[]
-}
-
-const curso = ref<Curso>({
-    id: 0,
-    nombreCurso: '',
-    asignaturas: []
-});
 
 
 
 const rawData = ref()
 
-const seatData = ref<Curso[]>()
+const seatData = ref<Asignatura[]>()
 
 
 export const asignaturaStore = defineStore('asignaturaFunctions', () => {
 
 
-    function setData(newData: Curso[]) {
+    function setData(newData: Asignatura[]) {
         seatData.value = newData
     }
 
-    async function getCursoById(Id: string) {
+    var asignaturas = reactive(Array<Asignatura>());
+
+
+    async function getAsignaturas() {
         const requestOptions: RequestInit = {
             method: 'GET',
             mode: 'cors',
@@ -43,19 +35,20 @@ export const asignaturaStore = defineStore('asignaturaFunctions', () => {
         };
 
         try {
-            const response = await fetch(`http://localhost:5183/Curso/${parseInt(Id)}`, requestOptions);
+            const response = await fetch(`http://localhost:5183/Asignatura`, requestOptions);
 
             if (!response.ok) {
                 throw new Error('Error en la solicitud: ' + response.statusText);
             }
 
             const json = await response.json();
-            const mappedData = [{
-                "id": json["id"],
-                "nombreCurso": json["nombreCurso"],
-                "asignaturas": json["asignaturas"] || [],
-            }];
-            setData(mappedData);
+            console.log(json);
+            // const mappedData = [{
+            //     "id": json["id"],
+            //     "nombreAsignatura": json["nombreAsignatura"],
+            // }];
+            // setData(mappedData);
+            asignaturas.push(...json);
 
 
         } catch (error) {
@@ -64,5 +57,5 @@ export const asignaturaStore = defineStore('asignaturaFunctions', () => {
     }
 
 
-    return { seatData, getCursoById }
+    return { asignaturas, getAsignaturas }
 })

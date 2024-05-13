@@ -18,11 +18,11 @@ async function login() {
         const userReturned = await store.getUser(userLogin, passwordLogin);
         if (userReturned && userReturned.email === userLogin) {
             // Check user role and redirect accordingly
-            // if (userReturned.rol === 'Admin') {
-                // await router.push('/intranet');
-            // } else {
+            if (userReturned.rol === 'Admin') {
+                await router.push('/intranet');
+            } else {
                 await router.push('/');
-            // }
+            }
         } else {
             errorMessage.value = 'Usuario o contraseña incorrectos';
         }

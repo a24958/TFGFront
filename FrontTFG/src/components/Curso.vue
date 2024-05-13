@@ -20,7 +20,7 @@ const props = defineProps<{
 <template>
     <div>
         <p>{{ nombreCurso }}</p>
-        <RouterLink  :to="'/curso/'+ id"><button>ASIGNATURAS</button></RouterLink>
+        <!-- <RouterLink  :to="'/curso/'+ id"><button>ASIGNATURAS</button></RouterLink> -->
     </div>
 </template>
 

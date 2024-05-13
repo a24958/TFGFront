@@ -32,31 +32,57 @@ const idFirstQuestion = ref(0)
 const inputValue = ref('');
 
 function nextQuestion() {
-    if (idFirstQuestion.value == props.preguntas.length - 1) {
-        idFirstQuestion.value = 0
-        return
+    let currentIndex = idFirstQuestion.value;
+    let nextIndex = (currentIndex + 1) % props.preguntas.length;
+    
+    // Avanzar al siguiente índice no contestado
+    while (props.preguntas[nextIndex].contestado) {
+        nextIndex = (nextIndex + 1) % props.preguntas.length;
+        if (nextIndex === currentIndex) {
+            // Todas las preguntas han sido contestadas, detener el ciclo
+            break;
+        }
     }
 
-    idFirstQuestion.value += 1
+    // Si se llegó al final y todas las preguntas están contestadas, mostrar el mensaje de "Has acabado"
+    if (nextIndex === currentIndex && props.preguntas[nextIndex].contestado) {
+        toast.success('¡Has acabado!');
+        return;
+    }
+
+    // Si no se ha llegado al final o aún quedan preguntas por contestar, cambiar la pregunta
+    idFirstQuestion.value = nextIndex;
 }
 
+
 function functionTestEnter(value: string) {
+    // Verificar si todas las preguntas ya han sido contestadas
+    const todasContestadas = props.preguntas.every(pregunta => pregunta.contestado);
+
+    // Si todas las preguntas ya han sido contestadas, detener el juego
+    if (todasContestadas) {
+        toast.info('¡Has acabado!');
+        return;
+    }
+
+    // Resto del código para comprobar la respuesta y avanzar a la siguiente pregunta
     if (value.trim().toLowerCase() === props.preguntas[idFirstQuestion.value].respuesta.trim().toLowerCase()) {
         props.preguntas[idFirstQuestion.value].acertado = true;
         props.preguntas[idFirstQuestion.value].contestado = true;
-        toast.success('!CORRECTO!')
-        nextQuestion()
+        toast.success('¡CORRECTO!');
+        nextQuestion();
         inputValue.value = '';
     } else if (value.trim().toLowerCase() === '') {
-        nextQuestion()
+        nextQuestion();
     } else {
         props.preguntas[idFirstQuestion.value].acertado = false;
         props.preguntas[idFirstQuestion.value].contestado = true;
-        toast.error('!ERROR!')
-        nextQuestion()
+        toast.error('¡ERROR!');
+        nextQuestion();
         inputValue.value = '';
     }
 }
+
 
 const handleInputChange = (event: Event) => {
     const inputValue = (event.target as HTMLInputElement).value;
