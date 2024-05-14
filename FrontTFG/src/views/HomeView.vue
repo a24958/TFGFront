@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import MostPopularGames from '@/components/MostPopularGames.vue';
+import GameForm from '@/components/home-form/GameForm.vue';
 </script>
 
 <template>
-    <section>
+    <!-- <section>
         <article>
             <div>
                 <h2>NUESTROS JUEGOS MAS POPULARES</h2>
@@ -12,10 +13,11 @@ import MostPopularGames from '@/components/MostPopularGames.vue';
         </article>
         <article>
             <div>
-                WIP NOT IMPLEMENTED
+                
             </div>
         </article>
-    </section>
+    </section> -->
+    <GameForm></GameForm>
 </template>
 
 <style scoped>
@@ -24,6 +26,10 @@ section {
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
+}
+
+h2 {
+    color: #3B82F6;
 }
 
 @media screen and (min-width: 800px) {

@@ -1,25 +1,22 @@
-import router from "@/router";
 import { defineStore } from "pinia";
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 
-interface Curso {
+interface GameType {
     id: number,
-    nombreCurso: string,
+    tipo: string,
 }
 
 const rawData = ref()
 
-const seatData = ref<Curso[]>()
+const seatData = ref<GameType[]>()
 
+export const gameTypeStore = defineStore('gameTypeFunctions', () => {
 
-export const cursoStore = defineStore('cursoFunctions', () => {
-
-
-    function setData(newData: Curso[]) {
+    function setData(newData: GameType[]) {
         seatData.value = newData
     }
 
-    async function getCursos() {
+    async function getTipoJuego() {
         const requestOptions: RequestInit = {
             method: 'GET',
             mode: 'cors',
@@ -29,19 +26,19 @@ export const cursoStore = defineStore('cursoFunctions', () => {
         };
 
         try {
-            const response = await fetch(`http://localhost:5183/Curso`, requestOptions);
+            const response = await fetch(`http://localhost:5183/TipoJuego/`, requestOptions);
 
             if (!response.ok) {
                 throw new Error('Error en la solicitud: ' + response.statusText);
             }
 
             const json = await response.json();
-            const mappedData: Curso[] = [];
+            const mappedData: GameType[] = [];
 
             for (let index = 0; index < json.length; index++) {
                 mappedData.push({
                     "id": json[index]["id"],
-                    "nombreCurso": json[index]["nombreCurso"],
+                    "tipo": json[index]["tipo"],
                 })
 
             }
@@ -55,5 +52,5 @@ export const cursoStore = defineStore('cursoFunctions', () => {
     }
 
 
-    return { seatData, getCursos }
+    return { seatData, getTipoJuego }
 })

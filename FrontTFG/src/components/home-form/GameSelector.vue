@@ -1,0 +1,29 @@
+<script setup lang="ts">
+import Dropdown from 'primevue/dropdown';
+import FloatLabel from 'primevue/floatlabel';
+import { onBeforeMount, ref } from "vue";
+import { storeToRefs } from 'pinia';
+import { gameTypeStore } from '@/stores/storeGameType';
+
+const store = gameTypeStore();
+
+onBeforeMount(async () => {
+    await store.getTipoJuego();
+})
+const { seatData: data } = storeToRefs(store);
+
+const selectedGame = ref();
+
+</script>
+
+<template>
+    <div class="card flex justify-content-center">
+        <FloatLabel>
+            <Dropdown v-model="selectedGame" :options="data" optionLabel="tipo" inputId="gm" class="w-full md:w-14rem"
+                style="width: 14rem;" />
+            <label for="gm">Tipo de Juego</label>
+        </FloatLabel>
+    </div>
+</template>
+
+<style scoped></style>
