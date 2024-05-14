@@ -4,7 +4,7 @@ import GameForm from '@/components/home-form/GameForm.vue';
 </script>
 
 <template>
-    <!-- <section>
+    <section>
         <article>
             <div>
                 <h2>NUESTROS JUEGOS MAS POPULARES</h2>
@@ -13,11 +13,11 @@ import GameForm from '@/components/home-form/GameForm.vue';
         </article>
         <article>
             <div>
-                
+                <GameForm></GameForm>
             </div>
         </article>
-    </section> -->
-    <GameForm></GameForm>
+    </section>
+
 </template>
 
 <style scoped>
