@@ -1,9 +1,21 @@
 <script setup lang="ts">
+import { gameFormStore } from '@/stores/storeGameForm';
 import Dropdown from 'primevue/dropdown';
 import FloatLabel from 'primevue/floatlabel';
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 const selectedItem = ref();
+const store = gameFormStore();
+
+const props = defineProps<{
+    labelText: string,
+    itemList: Curso[] | Asignatura[] | undefined,
+}>()
+
+watch(selectedItem, (newValue, oldValue) => {
+
+    console.log(`El id de ${props.labelText} cambió de`, oldValue ?? null, 'a', newValue ?? null);
+});
 
 interface Curso {
     id: number,
@@ -14,11 +26,6 @@ interface Asignatura {
     id: number,
     nombreAsignatura: string
 }
-
-const props = defineProps<{
-    labelText: string,
-    itemList: Curso[] | Asignatura[] | undefined,
-}>()
 
 </script>
 
