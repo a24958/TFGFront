@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import Button from 'primevue/button';
+import { gameFormStore } from '@/stores/storeGameForm';
 import { ref } from 'vue';
+
+const store = gameFormStore();
 
 const loading = ref(false);
 
 const load = () => {
-    loading.value = true;
-    setTimeout(() => {
-        loading.value = false;
-    }, 2000);
-};
+    store.load(loading);
+}
 
 </script>
 
