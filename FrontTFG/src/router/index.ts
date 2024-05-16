@@ -7,6 +7,7 @@ import LoginView from '@/views/LoginView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import IntranetView from '@/views/IntranetView.vue'
 import HomeView from '@/views/HomeView.vue'
+import CrearPasapalabraView from '@/views/CrearPasapalabraView.vue'
 
 
 
@@ -66,6 +67,16 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
+      meta: {
+        showHeader: true,
+        requiresAdmin: false, 
+        requiresAuth: false,
+      }
+    },
+    {
+      path: '/crear-pasapalabra',
+      name: 'crear-pasapalabra',
+      component: CrearPasapalabraView,
       meta: {
         showHeader: true,
         requiresAdmin: false, 

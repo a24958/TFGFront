@@ -10,6 +10,7 @@ import { onBeforeMount } from 'vue';
 
 <template>
         <AsignaturaSection></AsignaturaSection>
+        
 </template>
 
 <style scoped></style>
