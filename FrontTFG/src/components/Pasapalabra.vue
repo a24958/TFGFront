@@ -34,7 +34,7 @@ const inputValue = ref('');
 function nextQuestion() {
     let currentIndex = idFirstQuestion.value;
     let nextIndex = (currentIndex + 1) % props.preguntas.length;
-    
+
     // Avanzar al siguiente índice no contestado
     while (props.preguntas[nextIndex].contestado) {
         nextIndex = (nextIndex + 1) % props.preguntas.length;

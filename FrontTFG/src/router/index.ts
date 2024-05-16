@@ -20,7 +20,11 @@ const router = createRouter({
     {
       path: '/pasapalabra/:id',
       name: 'pasapalabra-id',
-      component: PasapalabraView
+      component: PasapalabraView,
+      meta: {
+        showHeader: true,
+        requiresFetch: true
+      }
     },
     {
       path: '/intranet/curso',
@@ -59,7 +63,7 @@ const router = createRouter({
       component: IntranetView,
       meta: {
         showHeader: false,
-        requiresAdmin: true, 
+        requiresAdmin: true,
         requiresAuth: true,
       }
     },
@@ -69,7 +73,7 @@ const router = createRouter({
       component: HomeView,
       meta: {
         showHeader: true,
-        requiresAdmin: false, 
+        requiresAdmin: false,
         requiresAuth: false,
       }
     },
@@ -79,7 +83,7 @@ const router = createRouter({
       component: CrearPasapalabraView,
       meta: {
         showHeader: true,
-        requiresAdmin: false, 
+        requiresAdmin: false,
         requiresAuth: false,
       }
     },

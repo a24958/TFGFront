@@ -9,7 +9,7 @@ import router from "@/router";
 let id = '';
 for (const curso of router.currentRoute.value.params.id
 ) {
-   id += curso 
+    id += curso
 }
 
 const store = pasapalabraStore();
