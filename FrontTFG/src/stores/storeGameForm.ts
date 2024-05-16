@@ -77,19 +77,10 @@ export const gameFormStore = defineStore('gameFormFunctions', () => {
                 })
             }
             setData(mappedData);
-            restoreRequestOption(requestData);
-            console.log(mappedData)
-            console.log(requestData.value)
 
         } catch (error) {
             console.log('Error al hacer la llamada a la API:', error);
         }
-    }
-
-    function restoreRequestOption(object: any) {
-        object.value.idTipoJuego = 1;
-        object.value.idCurso = 0;
-        object.value.idAsignatura = 0;
     }
 
     function fillRequestOption(object: any, type: string) {
