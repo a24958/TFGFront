@@ -70,7 +70,7 @@ export default {
 </template>
 
 
-<style>
+<style scoped>
 /* Añade estilos según sea necesario */
 form {
   max-width: 600px;
