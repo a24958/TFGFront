@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { gameFormStore } from '@/stores/storeGameForm';
+import { storeToRefs } from 'pinia';
 import Dropdown from 'primevue/dropdown';
 import FloatLabel from 'primevue/floatlabel';
 import { ref, watch } from "vue";
@@ -13,8 +14,7 @@ const props = defineProps<{
 }>()
 
 watch(selectedItem, (newValue, oldValue) => {
-
-    console.log(`El id de ${props.labelText} cambió de`, oldValue ?? null, 'a', newValue ?? null);
+    store.fillRequestOption(newValue, props.labelText);
 });
 
 interface Curso {

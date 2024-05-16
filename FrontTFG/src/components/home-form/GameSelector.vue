@@ -1,18 +1,23 @@
 <script setup lang="ts">
 import Dropdown from 'primevue/dropdown';
 import FloatLabel from 'primevue/floatlabel';
-import { onBeforeMount, ref } from "vue";
+import { onBeforeMount, ref, watch } from "vue";
 import { storeToRefs } from 'pinia';
 import { gameTypeStore } from '@/stores/storeGameType';
+import { gameFormStore } from '@/stores/storeGameForm';
 
 const store = gameTypeStore();
+const gameStore = gameFormStore();
 
 onBeforeMount(async () => {
     await store.getTipoJuego();
 })
 const { seatData: data } = storeToRefs(store);
-
 const selectedGame = ref();
+
+watch(selectedGame, (newValue, oldValue) => {
+    gameStore.fillRequestOption(newValue, "");
+});
 
 </script>
 

@@ -17,25 +17,26 @@ interface BuscadorResponseBody {
     idTipoJuego: number
 }
 
-const TYPE_COURSE = 'nombreCurso';
-const TYPE_SUBJECT = 'nombreAsignatura';
+const TYPE_COURSE = 'Curso';
+const TYPE_SUBJECT = 'Asignatura';
 
 const rawData = ref()
+
+const requestData = ref<BuscadorRequestBody>({
+    idTipoJuego: 1,
+    idCurso: 0,
+    idAsignatura: 0
+});
 
 const seatData = ref<BuscadorResponseBody[]>()
 
 export const gameFormStore = defineStore('gameFormFunctions', () => {
     async function load(loading: Ref<boolean>) {
         loading.value = true;
-        //TODO WIP HARCODED
-        await searchGames({
-            idCurso: 0,
-            idAsignatura: 0,
-            idTipoJuego: 1,
-        })
+        await searchGames(requestData.value);
         setTimeout(() => {
             loading.value = false;
-        }, 2000);
+        }, 1000);
     };
 
     function setData(newData: BuscadorResponseBody[]) {
@@ -75,31 +76,35 @@ export const gameFormStore = defineStore('gameFormFunctions', () => {
                     "idTipoJuego": json[index]["idTipoJuego"]
                 })
             }
-
-            console.log(mappedData);
             setData(mappedData);
-
-
+            restoreRequestOption(requestData);
+            console.log(mappedData)
+            console.log(requestData.value)
 
         } catch (error) {
             console.log('Error al hacer la llamada a la API:', error);
         }
     }
 
-    function fillRequestOption(object: Map<any, any>) {
-        const test = {};
+    function restoreRequestOption(object: any) {
+        object.value.idTipoJuego = 1;
+        object.value.idCurso = 0;
+        object.value.idAsignatura = 0;
+    }
 
-        object.forEach(key => {
-            if (key === TYPE_COURSE) {
-                console.log(key)
-            }
-        });
+    function fillRequestOption(object: any, type: string) {
+        const id = object?.id ?? 0;
 
-        // return {
-        //     // idCurso: number,
-        //     // idAsignatura: number,
-        //     // idTipoJuego: number,
-        // }
+        switch (type) {
+            case TYPE_COURSE:
+                requestData.value.idCurso = id;
+                break;
+            case TYPE_SUBJECT:
+                requestData.value.idAsignatura = id;
+            default:
+                requestData.value.idTipoJuego = id;
+                break;
+        }
     }
 
     return { load, seatData, searchGames, fillRequestOption }
