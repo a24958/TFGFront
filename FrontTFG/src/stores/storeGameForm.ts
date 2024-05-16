@@ -101,6 +101,7 @@ export const gameFormStore = defineStore('gameFormFunctions', () => {
                 break;
             case TYPE_SUBJECT:
                 requestData.value.idAsignatura = id;
+                break;
             default:
                 requestData.value.idTipoJuego = id;
                 break;
