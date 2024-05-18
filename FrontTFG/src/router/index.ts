@@ -8,7 +8,7 @@ import RegisterView from '@/views/RegisterView.vue'
 import IntranetView from '@/views/IntranetView.vue'
 import HomeView from '@/views/HomeView.vue'
 import CrearPasapalabraView from '@/views/CrearPasapalabraView.vue'
-
+import GameCardsView from '@/views/GameCardsView.vue'
 
 
 
@@ -87,6 +87,16 @@ const router = createRouter({
         requiresAuth: false,
       }
     },
+    {
+      path: '/game-search-result',
+      name: 'game-search-result',
+      component: GameCardsView,
+      meta: {
+        showHeader: true,
+        requiresAdmin: false,
+        requiresAuth: false,
+      }
+    }
   ]
 })
 

@@ -37,6 +37,8 @@ export const gameFormStore = defineStore('gameFormFunctions', () => {
         setTimeout(() => {
             loading.value = false;
         }, 1000);
+
+        return seatData.value?.length;
     };
 
     function setData(newData: BuscadorResponseBody[]) {
@@ -83,6 +85,12 @@ export const gameFormStore = defineStore('gameFormFunctions', () => {
         }
     }
 
+    function restoreRequestOption() {
+        requestData.value.idAsignatura = 0,
+            requestData.value.idCurso = 0,
+            requestData.value.idTipoJuego = 1
+    }
+
     function fillRequestOption(object: any, type: string) {
         const id = object?.id ?? 0;
 
@@ -99,5 +107,5 @@ export const gameFormStore = defineStore('gameFormFunctions', () => {
         }
     }
 
-    return { load, seatData, searchGames, fillRequestOption }
+    return { load, seatData, searchGames, fillRequestOption, restoreRequestOption }
 })
