@@ -43,6 +43,7 @@ setInterval(decrementTime, 1000)
 function stopStyleClass(index: number) {
     const current = document.getElementById(`${index}`);
     current?.classList.remove('parpadeo');
+    timeValue.value = 0;
 }
 
 function toggleClass(currentIndex: number, nextIndex: number) {
@@ -61,7 +62,6 @@ function nextQuestion() {
     while (props.preguntas[nextIndex].contestado) {
         nextIndex = (nextIndex + 1) % props.preguntas.length;
         if (nextIndex === currentIndex) {
-            // Todas las preguntas han sido contestadas, detener el ciclo
             break;
         }
     }
@@ -69,6 +69,7 @@ function nextQuestion() {
     // Si se llegó al final y todas las preguntas están contestadas, mostrar el mensaje de "Has acabado"
     if (nextIndex === currentIndex && props.preguntas[nextIndex].contestado) {
         toast.add({ severity: 'info', summary: 'Fin', detail: 'Has contestado a todas las preguntas', life: 3000 });
+        stopStyleClass(idFirstQuestion.value);
         return;
     }
 
