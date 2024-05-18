@@ -3,9 +3,7 @@ import CrearPasapalabra from '@/components/CrearPasapalabra.vue';
 </script>
 
 <template>
-  <div id="app">
-    <CrearPasapalabra></CrearPasapalabra>
-  </div>
+  <CrearPasapalabra></CrearPasapalabra>
 </template>
 
 <style>
