@@ -10,8 +10,12 @@ import { useToast } from "primevue/usetoast";
 
 const toast = useToast();
 
-
 const store = pasapalabraStore();
+
+const acierto = ref<HTMLAudioElement | null>(null);
+const fallo = ref<HTMLAudioElement | null>(null);
+acierto.value = new Audio('/src/assets/acierto.mp3');
+fallo.value = new Audio('/src/assets/fallo.mp3');
 
 interface PreguntaPasapalabra {
     id: number,
@@ -79,7 +83,6 @@ function nextQuestion() {
     toggleClass(currentIndex, nextIndex);
 }
 
-
 function functionKeyUpEnter(value: string) {
     // Verificar si todas las preguntas ya han sido contestadas
     const todasContestadas = props.preguntas.every(pregunta => pregunta.contestado);
@@ -95,6 +98,8 @@ function functionKeyUpEnter(value: string) {
     if (value.trim().toLowerCase() === props.preguntas[idFirstQuestion.value].respuesta.trim().toLowerCase()) {
         props.preguntas[idFirstQuestion.value].acertado = true;
         props.preguntas[idFirstQuestion.value].contestado = true;
+        acierto.value!.currentTime = 0.5;
+        acierto.value?.play()
         nextQuestion();
         inputValue.value = '';
     } else if (value.trim().toLowerCase() === '') {
@@ -102,6 +107,8 @@ function functionKeyUpEnter(value: string) {
     } else {
         props.preguntas[idFirstQuestion.value].acertado = false;
         props.preguntas[idFirstQuestion.value].contestado = true;
+        fallo.value!.currentTime = 0.75;
+        fallo.value?.play();
         nextQuestion();
         inputValue.value = '';
     }
