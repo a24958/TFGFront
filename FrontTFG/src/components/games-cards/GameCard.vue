@@ -2,6 +2,7 @@
 import Card from 'primevue/card';
 import Tag from 'primevue/tag';
 import Button from 'primevue/button';
+import Rating from 'primevue/rating';
 
 const SUBJECT_LENGUA = "Lengua";
 const SUBJECT_MATEMATICAS = "Matemáticas";
@@ -46,15 +47,15 @@ function getSubjectTypeText() {
 function getSubjectTypeColor() {
     switch (props.idAsignatura) {
         case 1:
-            return "Danger";
+            return "danger";
         case 2:
-            return "Info";
+            return "info";
         case 3:
-            return "Success";
+            return "success";
         case 4:
-            return "Warning";
+            return "warning";
         case 5:
-            return "Secondary";
+            return "secondary";
     }
 }
 
@@ -89,17 +90,13 @@ function getCourseTypeText() {
             </div>
         </template>
         <template #subtitle>{{ temaJuego }}</template>
-        <template #content>
-            <p class="m-0">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae
-                numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis
-                esse, cupiditate neque
-                quas!
-            </p>
-        </template>
         <template #footer>
-            <div class="flex gap-3 mt-1">
-                <RouterLink to="/pasapalabra/1"><Button label="Jugar" class="w-full" @click="" /></RouterLink>
+            <div class="card_footer">
+                <div class="flex gap-3 mt-1">
+                    <RouterLink to="/pasapalabra/1"><Button label="Jugar" class="w-full" />
+                    </RouterLink>
+                </div>
+                <Rating v-model="props.idCurso" readonly :cancel="false" :stars="6" class="custom-rating"></Rating>
             </div>
         </template>
     </Card>
@@ -108,6 +105,23 @@ function getCourseTypeText() {
 </template>
 
 <style scoped>
+.custom-rating .p-rating .p-rating-icon {
+    color: #ff9800;
+    /* Cambia este color por el que prefieras */
+}
+
+.custom-rating .p-rating .p-rating-icon.p-rating-icon-filled {
+    color: #ffeb3b;
+    /* Cambia este color por el que prefieras */
+}
+
+.card_footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between
+}
+
 .title_tag {
     display: flex;
     flex-direction: row;
