@@ -3,13 +3,15 @@ import { computed, onMounted, onUnmounted, ref } from 'vue';
 import PreguntaPasapalabra from './PreguntaPasapalabra.vue';
 import { pasapalabraStore } from '@/stores/storePasapalabra';
 import vueDebounce, { debounce } from 'vue-debounce'
-import { useToast } from 'vue-toast-notification';
+import InputText from 'primevue/inputtext';
+import Button from 'primevue/button';
+import Toast from 'primevue/toast';
+import { useToast } from "primevue/usetoast";
 
-
-const vDebounce = vueDebounce({ lock: true })
 const toast = useToast();
-const store = pasapalabraStore();
 
+
+const store = pasapalabraStore();
 
 interface PreguntaPasapalabra {
     id: number,
@@ -26,10 +28,30 @@ const props = defineProps<{
     preguntas: PreguntaPasapalabra[]
 }>()
 
-
-
 const idFirstQuestion = ref(0)
 const inputValue = ref('');
+const timeValue = ref(300);
+
+const decrementTime = () => {
+    if (timeValue.value > 0) {
+        timeValue.value--;
+    }
+}
+
+setInterval(decrementTime, 1000)
+
+function stopStyleClass(index: number) {
+    const current = document.getElementById(`${index}`);
+    current?.classList.remove('parpadeo');
+}
+
+function toggleClass(currentIndex: number, nextIndex: number) {
+    const current = document.getElementById(`${currentIndex}`);
+    current?.classList.remove('parpadeo');
+
+    const next = document.getElementById(`${nextIndex}`);
+    next?.classList.add('parpadeo');
+}
 
 function nextQuestion() {
     let currentIndex = idFirstQuestion.value;
@@ -46,22 +68,25 @@ function nextQuestion() {
 
     // Si se llegó al final y todas las preguntas están contestadas, mostrar el mensaje de "Has acabado"
     if (nextIndex === currentIndex && props.preguntas[nextIndex].contestado) {
-        toast.success('¡Has acabado!');
+        toast.add({ severity: 'info', summary: 'Fin', detail: 'Has contestado a todas las preguntas', life: 3000 });
         return;
     }
 
     // Si no se ha llegado al final o aún quedan preguntas por contestar, cambiar la pregunta
     idFirstQuestion.value = nextIndex;
+    inputValue.value = '';
+    toggleClass(currentIndex, nextIndex);
 }
 
 
-function functionTestEnter(value: string) {
+function functionKeyUpEnter(value: string) {
     // Verificar si todas las preguntas ya han sido contestadas
     const todasContestadas = props.preguntas.every(pregunta => pregunta.contestado);
 
     // Si todas las preguntas ya han sido contestadas, detener el juego
     if (todasContestadas) {
-        toast.info('¡Has acabado!');
+        stopStyleClass(idFirstQuestion.value)
+        toast.add({ severity: 'info', summary: 'Fin', detail: 'Has contestado a todas las preguntas', life: 3000 });
         return;
     }
 
@@ -69,7 +94,6 @@ function functionTestEnter(value: string) {
     if (value.trim().toLowerCase() === props.preguntas[idFirstQuestion.value].respuesta.trim().toLowerCase()) {
         props.preguntas[idFirstQuestion.value].acertado = true;
         props.preguntas[idFirstQuestion.value].contestado = true;
-        toast.success('¡CORRECTO!');
         nextQuestion();
         inputValue.value = '';
     } else if (value.trim().toLowerCase() === '') {
@@ -77,59 +101,129 @@ function functionTestEnter(value: string) {
     } else {
         props.preguntas[idFirstQuestion.value].acertado = false;
         props.preguntas[idFirstQuestion.value].contestado = true;
-        toast.error('¡ERROR!');
         nextQuestion();
         inputValue.value = '';
     }
 }
 
-
-const handleInputChange = (event: Event) => {
-    const inputValue = (event.target as HTMLInputElement).value;
-    handleInputChangeDebounced(inputValue);
-}
-
-const handleInputChangeDebounced = debounce((value: string) => {
-    if (value.trim().toLowerCase() === props.preguntas[idFirstQuestion.value].respuesta.trim().toLowerCase()) {
-        props.preguntas[idFirstQuestion.value].acertado = true;
-        props.preguntas[idFirstQuestion.value].contestado = true;
-        toast.success('!CORRECTO!')
-        nextQuestion()
-        inputValue.value = '';
-    }
-}, 200)
-
 </script>
 
 <template>
     <div>
-        <p> {{ name }}</p>
         <br>
+        <p class="title"> {{ name.replace('pasapalabra', '').toUpperCase() }}</p>
         <div class="game-container">
             <div id="rosco-container">
+                <div class="current_letter_container">
+                    <p>LETRA</p>
+                    <p class="current_letter"> {{ props.preguntas[idFirstQuestion].letra }}</p>
+                </div>
                 <ul id="rosco">
-                    <li v-for="element in props.preguntas">
-                        <PreguntaPasapalabra :id="element.id" :pregunta="element.pregunta"
-                            :respuesta="element.respuesta" :letra="element.letra" :contestado="element.contestado"
+                    <li v-for="element in props.preguntas" :id="(element.id - 1).toString()"
+                        :class="{ 'parpadeo': element.id === 1 }">
+                        <PreguntaPasapalabra :letra="element.letra" :contestado="element.contestado"
                             :acertado="element.acertado">
                         </PreguntaPasapalabra>
                     </li>
                 </ul>
             </div>
+            <div class="pregunta">{{ preguntas[idFirstQuestion].pregunta }}</div>
+            <div class="inputs">
+                <div class="card flex justify-content-center">
+                    <InputText type="text" v-model="inputValue" @keyup.enter="functionKeyUpEnter(inputValue)"
+                        class="input_style" />
+                </div>
+                <div class="card flex justify-content-center">
+                    <Button label="Pasapalabra" @click="nextQuestion" severity="secondary" class="button_style" />
+                </div>
+                <div class="time">
+                    <p>{{ timeValue }}</p>
+                </div>
+            </div>
         </div>
-        <div class="inputs">
-            <input type="text" @input="handleInputChange" @keyup.enter="functionTestEnter(inputValue)"
-                v-model="inputValue">
-            <button @click="nextQuestion">Pasapalabra</button>
-        </div>
+        <Toast />
     </div>
 </template>
 
 <style scoped>
-.inputs {
+.current_letter {
+    display: flex;
+    align-items: center;
+    font-size: 190px;
+    margin-top: 0;
+}
+
+.current_letter_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     position: absolute;
-    left: 42%;
-    bottom: 5%;
+    top: 12%;
+    left: 18%;
+    font-size: 50px;
+    color: white;
+    font-weight: bold;
+    width: 300px;
+}
+
+.current_letter_container p {
+    margin-bottom: 0;
+}
+
+.time {
+    background-color: #3663aff7;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-weight: bold;
+    box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+    border: 2px solid white;
+    height: 50px;
+    width: 50px;
+    color: white;
+}
+
+.input_style,
+.button_style {
+    background-color: #3663aff7;
+    color: white;
+    font-weight: bold;
+    box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+    border: 2px solid white;
+}
+
+.title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 50px;
+    margin-left: 16px;
+}
+
+.pregunta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 100px;
+    font-size: 22px;
+    color: white;
+}
+
+.inputs {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 450px;
+    margin-top: 22px;
 }
 
 .game-container {
@@ -141,8 +235,8 @@ const handleInputChangeDebounced = debounce((value: string) => {
 
 #rosco-container {
     position: relative;
-    width: 500px;
-    height: 500px;
+    width: 450px;
+    height: 450px;
 }
 
 #rosco {
@@ -269,5 +363,21 @@ const handleInputChangeDebounced = debounce((value: string) => {
 
 #rosco li:nth-child(26) {
     transform: rotate(256.25deg) translate(250px) rotate(-256.25deg);
+}
+
+@keyframes parpadeo {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+.parpadeo {
+    animation: parpadeo 1.2s infinite;
 }
 </style>

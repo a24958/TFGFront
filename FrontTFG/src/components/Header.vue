@@ -17,7 +17,7 @@ if (userData != null) {
             <RouterLink to="/login" id="no-responsive-item">Login</RouterLink>
         </div>
         <div v-else>
-            <RouterLink  to="/login">{{ nombre }}</RouterLink>
+            <RouterLink to="/login">{{ nombre }}</RouterLink>
 
         </div>
     </header>

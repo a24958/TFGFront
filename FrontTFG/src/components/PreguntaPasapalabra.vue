@@ -1,19 +1,22 @@
 <script setup lang="ts">
+import { computed } from 'vue';
+
 const props = defineProps<{
-    id: number,
-    pregunta: string,
-    respuesta: string,
     letra: string,
     contestado: boolean,
     acertado: boolean,
 }>()
+
+const dynamicClass = computed(() => ({
+    acertado: props.acertado,
+    fallado: !props.acertado && props.contestado,
+    default: !props.contestado,
+}))
 </script>
 
 <template>
-    <div>
+    <div :class="dynamicClass">
         <p>{{ letra }}</p>
-        <!-- <p>{{ pregunta }}</p>
-        <p>{{ respuesta }}</p> -->
     </div>
 </template>
 
@@ -27,7 +30,21 @@ div {
     height: 38px;
     width: 38px;
     border-radius: 50%;
-    background-color: rgb(0, 123, 255);
     color: white;
+    font-weight: bold;
+    box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+    text-shadow: 0px 1px 1px black;
+}
+
+.default {
+    background: linear-gradient(#3663aff7, #005eff82);
+}
+
+.acertado {
+    background-color: rgb(0, 197, 0);
+}
+
+.fallado {
+    background-color: red;
 }
 </style>
