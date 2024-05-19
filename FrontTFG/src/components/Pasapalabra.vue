@@ -6,11 +6,15 @@ import vueDebounce, { debounce } from 'vue-debounce'
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import Toast from 'primevue/toast';
+import Dialog from 'primevue/dialog';
 import { useToast } from "primevue/usetoast";
 
 const toast = useToast();
-
 const store = pasapalabraStore();
+
+const AT_START = 1;
+const AT_ERRORR = 2;
+const AT_END = 3;
 
 const acierto = ref<HTMLAudioElement | null>(null);
 const fallo = ref<HTMLAudioElement | null>(null);
@@ -32,17 +36,31 @@ const props = defineProps<{
     preguntas: PreguntaPasapalabra[]
 }>()
 
+onMounted(() => {
+    showDialog(null, null, null, AT_START);
+});
+
 const idFirstQuestion = ref(0)
 const inputValue = ref('');
 const timeValue = ref(300);
 
+let intervalId = 0;
+
 const decrementTime = () => {
     if (timeValue.value > 0) {
         timeValue.value--;
+    } else {
+        clearInterval(intervalId); // Detiene el intervalo cuando el tiempo llega a 0
     }
-}
+};
 
-setInterval(decrementTime, 1000)
+const startTimer = () => {
+    intervalId = setInterval(decrementTime, 1000);
+};
+
+const stopTimer = () => {
+    clearInterval(intervalId); // Detiene el intervalo manualmente
+};
 
 function stopStyleClass(index: number) {
     const current = document.getElementById(`${index}`);
@@ -90,7 +108,6 @@ function functionKeyUpEnter(value: string) {
     // Si todas las preguntas ya han sido contestadas, detener el juego
     if (todasContestadas) {
         stopStyleClass(idFirstQuestion.value)
-        toast.add({ severity: 'info', summary: 'Fin', detail: 'Has contestado a todas las preguntas', life: 3000 });
         return;
     }
 
@@ -109,14 +126,49 @@ function functionKeyUpEnter(value: string) {
         props.preguntas[idFirstQuestion.value].contestado = true;
         fallo.value!.currentTime = 0.75;
         fallo.value?.play();
+        showDialog(props.preguntas[idFirstQuestion.value].letra, props.preguntas[idFirstQuestion.value].pregunta, props.preguntas[idFirstQuestion.value].respuesta, AT_ERRORR)
         nextQuestion();
         inputValue.value = '';
     }
 }
 
+const showPanel = ref(true);
+const headerText = ref('');
+const dialogText = ref('');
+const dialogButtonLabel = ref('');
+
+function showDialog(letra: string | null, pregunta: string | null, respuesta: string | null, timeWhenIsDisplay: number) {
+    switch (timeWhenIsDisplay) {
+        case AT_START:
+            stopTimer();
+            showPanel.value = true;
+            headerText.value = "ATENCIÓN";
+            dialogText.value = "Le recordamos algo básico y sencillo del juego, las letras MAYÚSCULAS y letras MINÚSCULAS NO SON MOTIVO DE ERROR, pero SI QUE LOS SON LAS TILDES. Para comenzar presione el botón de EMPEZAR"
+            dialogButtonLabel.value = "Empezar"
+            return;
+        case AT_ERRORR:
+            stopTimer();
+            showPanel.value = true;
+            headerText.value = `CON LA LETRA ${letra}`;
+            dialogText.value = `${pregunta}: La respuestas correcta era ${respuesta}`
+            dialogButtonLabel.value = "Continuar"
+    }
+}
+
+function closeDialog() {
+    showPanel.value = !showPanel.value;
+    startTimer();
+}
 </script>
 
 <template>
+    <Dialog v-model:visible="showPanel" modal :header="headerText" :style="{ width: '50rem' }"
+        :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
+        <p class="m-0">
+            {{ dialogText }}
+        </p>
+        <Button :label="dialogButtonLabel" @click="closeDialog()"></Button>
+    </Dialog>
     <div>
         <br>
         <p class="title"> {{ name.replace('pasapalabra', '').toUpperCase() }}</p>
@@ -186,11 +238,12 @@ function functionKeyUpEnter(value: string) {
     align-items: center;
     justify-content: center;
     border-radius: 50%;
+    font-size: 24px;
     font-weight: bold;
     box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
     border: 2px solid white;
-    height: 50px;
-    width: 50px;
+    height: 70px;
+    width: 70px;
     color: white;
 }
 
@@ -230,7 +283,7 @@ function functionKeyUpEnter(value: string) {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    width: 450px;
+    width: 475px;
     margin-top: 22px;
 }
 
@@ -259,14 +312,6 @@ function functionKeyUpEnter(value: string) {
 
 #rosco li {
     position: absolute;
-}
-
-#rosco li.correct {
-    background-color: #8eff8e;
-}
-
-#rosco li.incorrect {
-    background-color: #ff8e8e;
 }
 
 #rosco li:nth-child(1) {

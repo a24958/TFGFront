@@ -22,7 +22,7 @@ const router = createRouter({
       name: 'pasapalabra-id',
       component: PasapalabraView,
       meta: {
-        showHeader: true,
+        showHeader: false,
         requiresFetch: true
       }
     },

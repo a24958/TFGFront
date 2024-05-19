@@ -29,7 +29,7 @@ const { seatData: data } = storeToRefs(store);
 
 <style scoped>
 div {
-    height: 100vh;
+    height: 105vh;
     background: linear-gradient(#3663aff7, #005eff82);
 }
 </style>
