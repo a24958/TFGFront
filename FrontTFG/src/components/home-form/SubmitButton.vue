@@ -17,7 +17,8 @@ const load = async () => {
 
 <template>
     <div class="card flex justify-content-center">
-        <Button type="button" label="Buscar Juegos" icon="pi pi-search" :loading="loading" @click="load" />
+        <Button type="button" label="Buscar Juegos" icon="pi pi-search" :loading="loading" @click="load"
+            style="width: 18rem;" />
     </div>
 </template>
 

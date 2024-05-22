@@ -12,7 +12,7 @@ import GameForm from '@/components/home-form/GameForm.vue';
             </div>
         </article>
         <article>
-            <div>
+            <div style="width: 400px;">
                 <GameForm></GameForm>
             </div>
         </article>

@@ -26,10 +26,10 @@ const { seatData: cardsData } = storeToRefs(store);
 </script>
 
 <template>
-    <h1>Encontrados {{ cardsData?.length }} elementos</h1>
+    <h1>Encontrados {{ cardsData?.length }} juegos</h1>
     <div class="gameCardsContainer">
         <div v-for="(element, key) in cardsData" :key="key">
-            <GameCard :id-asignatura="element.idAsignatura" :id-curso="element.idCurso"
+            <GameCard :id="element.id" :id-asignatura="element.idAsignatura" :id-curso="element.idCurso"
                 :id-tipo-juego="element.idTipoJuego" :tema-juego="element.temaJuego"></GameCard>
         </div>
     </div>

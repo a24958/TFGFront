@@ -25,7 +25,7 @@ watch(selectedGame, (newValue, oldValue) => {
     <div class="card flex justify-content-center">
         <FloatLabel>
             <Dropdown v-model="selectedGame" :options="data" optionLabel="tipo" inputId="gm" class="w-full md:w-14rem"
-                style="width: 14rem;" />
+                style="width: 16rem;" />
             <label for="gm">Tipo de Juego</label>
         </FloatLabel>
     </div>

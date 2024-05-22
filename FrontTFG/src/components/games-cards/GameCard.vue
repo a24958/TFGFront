@@ -18,6 +18,7 @@ const COURSE_5 = "5º Primaria";
 const COURSE_6 = "6º Primaria";
 
 const props = defineProps<{
+    id: number,
     temaJuego: string,
     idAsignatura: number,
     idCurso: number,
@@ -93,7 +94,7 @@ function getCourseTypeText() {
         <template #footer>
             <div class="card_footer">
                 <div class="flex gap-3 mt-1">
-                    <RouterLink to="/pasapalabra/1"><Button label="Jugar" class="w-full" />
+                    <RouterLink :to="`/pasapalabra/${id}`"><Button label="Jugar" class="w-full" />
                     </RouterLink>
                 </div>
                 <Rating v-model="props.idCurso" readonly :cancel="false" :stars="6" class="custom-rating"></Rating>

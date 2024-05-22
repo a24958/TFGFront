@@ -179,8 +179,8 @@ function closeDialog() {
                     <p class="current_letter"> {{ props.preguntas[idFirstQuestion].letra }}</p>
                 </div>
                 <ul id="rosco">
-                    <li v-for="element in props.preguntas" :id="(element.id - 1).toString()"
-                        :class="{ 'parpadeo': element.id === 1 }">
+                    <li v-for="element in props.preguntas" :id="(element.id - props.preguntas[0].id).toString()"
+                        :class="{ 'parpadeo': element.id === props.preguntas[0].id }">
                         <PreguntaPasapalabra :letra="element.letra" :contestado="element.contestado"
                             :acertado="element.acertado">
                         </PreguntaPasapalabra>
