@@ -8,6 +8,7 @@ import Button from 'primevue/button';
 import Toast from 'primevue/toast';
 import ConfirmDialog from 'primevue/confirmdialog';
 import 'primeicons/primeicons.css'
+import FileUpload from 'primevue/fileupload';
 import Pasapalabra from './Pasapalabra.vue';
 
 import { useConfirm } from "primevue/useconfirm";
@@ -86,11 +87,23 @@ onMounted(() => {
     respuesta: ''
   }));
 });
+
+const onAdvancedUpload = (event: any) => {
+  toast.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 });
+};
 </script>
 
 <template>
   <div class="create_game_form_container">
     <h1>Crear Juegos</h1>
+    <div class="card">
+      <FileUpload name="demo[]" url="/api/upload" @upload="onAdvancedUpload($event)" :multiple="true" accept=".csv"
+        :maxFileSize="1000000">
+        <template #empty>
+          <p>Drag and drop files to here to upload.</p>
+        </template>
+      </FileUpload>
+    </div>
     <form @submit.prevent="submitForm">
       <div class="game_properties">
         <CreateGameTextInput :label-text="'Nombre del Juego'"></CreateGameTextInput>
