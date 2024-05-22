@@ -9,7 +9,7 @@ import IntranetView from '@/views/IntranetView.vue'
 import HomeView from '@/views/HomeView.vue'
 import CrearPasapalabraView from '@/views/CrearPasapalabraView.vue'
 import GameCardsView from '@/views/GameCardsView.vue'
-
+import TeacherGraphView from '@/views/TeacherGraphView.vue'
 
 
 
@@ -96,7 +96,17 @@ const router = createRouter({
         requiresAdmin: false,
         requiresAuth: false,
       }
-    }
+    },
+    {
+      path: '/teacher-intranet/graphs',
+      name: 'teacher-intranet-graphs',
+      component: TeacherGraphView,
+      meta: {
+        showHeader: false,
+        requiresAdmin: false,
+        requiresAuth: false,
+      }
+    },
   ]
 })
 
