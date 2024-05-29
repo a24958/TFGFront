@@ -5,19 +5,16 @@ import { storeToRefs } from 'pinia';
 import { onBeforeMount } from 'vue';
 
 const store = cursoStore();
-// onBeforeMount(async () => {
-//     await store.getCursos();
-// })
-// const { seatData: data } = storeToRefs(store);
-
-
-const cursos = store.cursos;
+onBeforeMount(async () => {
+    await store.getCursos();
+})
+const { seatData: data } = storeToRefs(store);
 
 
 </script>
 
 <template>
-    <div v-for="element in cursos" :key="element.id">
+    <div v-for="element in data" :key="element.id">
         <Curso :id="element.id" :nombreCurso="element.nombreCurso"></Curso>
     </div>
 </template>

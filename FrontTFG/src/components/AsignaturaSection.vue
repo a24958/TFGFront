@@ -26,11 +26,6 @@ interface Asignatura {
 <template>
     <section class="sessionContainer">
         <div>
-            <!-- {{data.id}}
-            {{data.nombreAsignatura}} -->
-
-        </div>
-        <div>
             <h1>ASIGNATURAS DISPONIBLES</h1>
             <div v-for="element in data" :key="element.id" class="sessionContainerItem">
                 <Asignatura :key="element.id" :id="element.id"

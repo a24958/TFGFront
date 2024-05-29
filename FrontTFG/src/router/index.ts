@@ -35,11 +35,11 @@ const router = createRouter({
       path: '/intranet/asignatura',
       name: 'asignatura',
       component: AsignaturasView,
-      props: true,
-      meta: {
-        showHeader: true,
-        requiresFetch: true
-      }
+      // props: true,
+      // meta: {
+      //   showHeader: true,
+      //   requiresFetch: true
+      // }
     },
     {
       path: '/login',
