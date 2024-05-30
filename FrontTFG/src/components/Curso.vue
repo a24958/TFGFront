@@ -13,14 +13,14 @@ const props = defineProps<{
 }>()
 
 // const inputValue = ref('');
-
+const deleteCurso = store.deleteCurso;
 
 </script>
 
 <template>
     <div>
         <p>{{ nombreCurso }}</p>
-        <!-- <RouterLink  :to="'/curso/'+ id"><button>ASIGNATURAS</button></RouterLink> -->
+        <button id="delete" @click="deleteCurso(id)"><img src="" alt=""></button>
     </div>
 </template>
 

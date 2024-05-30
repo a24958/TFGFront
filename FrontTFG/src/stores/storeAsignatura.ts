@@ -56,6 +56,59 @@ export const asignaturaStore = defineStore('asignaturaFunctions', () => {
         }
     }
 
+    async function deleteAsignatura(asignaturaId: number) {
+        const requestOptions: RequestInit = {
+            method: 'DELETE',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
 
-    return { asignaturas, getAsignaturas }
+        try {
+            const response = await fetch(`http://localhost:5183/Asignatura/${asignaturaId}`, requestOptions);
+
+            if (!response.ok) {
+                throw new Error('Error en la solicitud: ' + response.statusText);
+            }
+
+            // Si la solicitud fue exitosa, actualizar la lista de asignaturas
+            const index = asignaturas.findIndex(asignatura => asignatura.id === asignaturaId);
+            if (index !== -1) {
+                asignaturas.splice(index, 1);
+            }
+
+        } catch (error) {
+            console.log('Error al hacer la llamada a la API:', error);
+        }
+    }
+
+    async function addAsignatura(nuevaAsignatura: Omit<Asignatura, 'id'>) {
+        const requestOptions: RequestInit = {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(nuevaAsignatura)
+        };
+
+        try {
+            const response = await fetch(`http://localhost:5183/Asignatura`, requestOptions);
+
+            if (!response.ok) {
+                throw new Error('Error en la solicitud: ' + response.statusText);
+            }
+
+            const json = await response.json();
+            asignaturas.push(json);
+            return json
+
+        } catch (error) {
+            console.log('Error al hacer la llamada a la API:', error);
+        }
+    }
+
+
+    return { asignaturas, getAsignaturas, deleteAsignatura, addAsignatura }
 })
