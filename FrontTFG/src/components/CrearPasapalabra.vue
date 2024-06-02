@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onBeforeMount } from 'vue';
 import { useJuegoStore } from '@/stores/storeCrearPasapalabra';
 import CreateGameTextInput from './teacher-create-game-form/CreateGameTextInput.vue';
 import CreateGameSelector from './teacher-create-game-form/CreateGameSelector.vue';
@@ -13,6 +13,10 @@ import Pasapalabra from './Pasapalabra.vue';
 
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
+import { gameTypeStore } from '@/stores/storeGameType';
+import { storeToRefs } from 'pinia';
+import { cursoStore } from '@/stores/storeCurso';
+import { asignaturaJuegoStore } from '@/stores/storeAsignaturaJuego';
 
 const confirm = useConfirm();
 const toast = useToast();
@@ -54,62 +58,36 @@ const confirm2 = () => {
 
 
 
-// Accedemos al store
-const { juego, resultadoJson, generarJson, enviarJson } = useJuegoStore();
+// Accedemos a los stores
+const { juego } = useJuegoStore();
 
-const juegos = [{ name: 'Pasapalabra' }]
-const cursos = [
-  { name: '1º Primaria' },
-  { name: '2º Primaria' },
-  { name: '3º Primaria' },
-  { name: '4º Primaria' },
-  { name: '5º Primaria' },
-  { name: '6º Primaria' },
-]
-const asignaturas = [
-  { name: 'Literatura' },
-  { name: 'Matemáticas' },
-  { name: 'Conocimiento del Medio' },
-  { name: 'Artes Plásticas' },
-  { name: 'Inglés' },
-]
-// Definimos la función submitForm
-const submitForm = async () => {
-  generarJson();
-  await enviarJson();
-};
+const storeJuegos = gameTypeStore();
+const storeCursos = cursoStore();
+const storeAsignaturas = asignaturaJuegoStore();
 
-// Configuramos el ciclo de vida del componente
-onMounted(() => {
-  juego.preguntas = Array.from({ length: 26 }, (_, i) => ({
-    letra: String.fromCharCode(65 + i),
-    pregunta: '',
-    respuesta: ''
-  }));
-});
+onBeforeMount(async () => {
+  await storeJuegos.getTipoJuego();
+  await storeCursos.getCursos();
+  await storeAsignaturas.getAsignaturas();
+})
 
-const onAdvancedUpload = (event: any) => {
-  toast.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 });
-};
+const { seatData: juegos } = storeToRefs(storeJuegos);
+const { seatData: cursos } = storeToRefs(storeCursos);
+const { setAsignatuaJuegoData: asignaturas } = storeToRefs(storeAsignaturas);
+
+
 </script>
 
 <template>
   <div class="create_game_form_container">
     <h1>Crear Juegos</h1>
-    <div class="card">
-      <FileUpload name="demo[]" url="/api/upload" @upload="onAdvancedUpload($event)" :multiple="true" accept=".csv"
-        :maxFileSize="1000000">
-        <template #empty>
-          <p>Drag and drop files to here to upload.</p>
-        </template>
-      </FileUpload>
-    </div>
-    <form @submit.prevent="submitForm">
+    <form @submit.prevent="">
       <div class="game_properties">
         <CreateGameTextInput :label-text="'Nombre del Juego'"></CreateGameTextInput>
-        <CreateGameSelector :label-text="'Juego'" :array="juegos"></CreateGameSelector>
-        <CreateGameSelector :label-text="'Curso'" :array="cursos"></CreateGameSelector>
-        <CreateGameSelector :label-text="'Asignatura'" :array="asignaturas"></CreateGameSelector>
+        <CreateGameSelector :label-text="'Juego'" :array="juegos" :option-label="'tipo'"></CreateGameSelector>
+        <CreateGameSelector :label-text="'Curso'" :array="cursos" :option-label="'nombreCurso'"></CreateGameSelector>
+        <CreateGameSelector :label-text="'Asignatura'" :array="asignaturas" :option-label="'nombreAsignatura'">
+        </CreateGameSelector>
       </div>
       <CreateGameTextInput :label-text="'Tema del Juego'"></CreateGameTextInput>
       <br>

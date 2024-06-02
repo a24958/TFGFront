@@ -5,7 +5,8 @@ import { ref } from "vue";
 
 const props = defineProps<{
     labelText: string,
-    array: {}[]
+    array: any,
+    optionLabel: string,
 }>();
 
 const selectedCity = ref();
@@ -14,7 +15,7 @@ const selectedCity = ref();
 <template>
     <div class="card flex justify-content-center">
         <FloatLabel>
-            <Dropdown v-model="selectedCity" :options="props.array" showClear optionLabel="name"
+            <Dropdown v-model="selectedCity" :options="props.array" showClear :optionLabel="optionLabel"
                 class="w-full md:w-14rem" id="gs" style="width: 14rem;" />
             <label for="gs">{{ labelText }}</label>
         </FloatLabel>
