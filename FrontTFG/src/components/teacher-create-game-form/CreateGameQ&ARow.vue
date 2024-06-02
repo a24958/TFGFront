@@ -11,8 +11,8 @@ const props = defineProps<{
 <template>
     <div>
         <p>{{ letra }}</p>
-        <CreateGameTextInput :label-text="labelQuestionText" class="inputs"></CreateGameTextInput>
-        <CreateGameTextInput :label-text="labelAnswerText" class="inputs"></CreateGameTextInput>
+        <CreateGameTextInput :label-text="labelQuestionText" :letra="letra" class="inputs"></CreateGameTextInput>
+        <CreateGameTextInput :label-text="labelAnswerText" :letra="letra" class="inputs"></CreateGameTextInput>
     </div>
 </template>
 

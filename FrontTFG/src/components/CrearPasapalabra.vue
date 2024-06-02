@@ -8,8 +8,6 @@ import Button from 'primevue/button';
 import Toast from 'primevue/toast';
 import ConfirmDialog from 'primevue/confirmdialog';
 import 'primeicons/primeicons.css'
-import FileUpload from 'primevue/fileupload';
-import Pasapalabra from './Pasapalabra.vue';
 
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
@@ -29,8 +27,8 @@ const confirm1 = () => {
     rejectClass: 'p-button-secondary p-button-outlined',
     rejectLabel: 'Cancelar',
     acceptLabel: 'Crear',
-    accept: () => {
-      toast.add({ severity: 'success', summary: 'Creado', detail: 'Juego creado correctamente', life: 3000 });
+    accept: async () => {
+      await store.enviarJson();
     },
     reject: () => {
       toast.add({ severity: 'error', summary: 'Cancelado', detail: 'Creación de juego cancleada correctamente', life: 3000 });
@@ -59,7 +57,7 @@ const confirm2 = () => {
 
 
 // Accedemos a los stores
-const { juego } = useJuegoStore();
+const store = useJuegoStore();
 
 const storeJuegos = gameTypeStore();
 const storeCursos = cursoStore();
@@ -83,18 +81,18 @@ const { setAsignatuaJuegoData: asignaturas } = storeToRefs(storeAsignaturas);
     <h1>Crear Juegos</h1>
     <form @submit.prevent="">
       <div class="game_properties">
-        <CreateGameTextInput :label-text="'Nombre del Juego'"></CreateGameTextInput>
+        <CreateGameTextInput :label-text="'Nombre del Juego'" :letra="''"></CreateGameTextInput>
         <CreateGameSelector :label-text="'Juego'" :array="juegos" :option-label="'tipo'"></CreateGameSelector>
         <CreateGameSelector :label-text="'Curso'" :array="cursos" :option-label="'nombreCurso'"></CreateGameSelector>
         <CreateGameSelector :label-text="'Asignatura'" :array="asignaturas" :option-label="'nombreAsignatura'">
         </CreateGameSelector>
       </div>
-      <CreateGameTextInput :label-text="'Tema del Juego'"></CreateGameTextInput>
-      <br>
-      <div v-for="(pregunta, index) in juego.preguntas" :key="index">
-        <CreateGameQARow :letra="pregunta.letra" :label-answer-text="'Respuesta'" :label-question-text="'Pregunta'">
-        </CreateGameQARow>
-      </div>
+      <CreateGameTextInput :label-text="'Tema del Juego'" :letra="''" </CreateGameTextInput>
+        <br>
+        <div v-for="(pregunta, index) in store.RequestPreguntas" :key="index">
+          <CreateGameQARow :letra="pregunta.letra" :label-answer-text="'Respuesta'" :label-question-text="'Pregunta'">
+          </CreateGameQARow>
+        </div>
     </form>
     <Toast />
     <ConfirmDialog></ConfirmDialog>
