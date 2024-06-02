@@ -28,11 +28,14 @@ const confirm1 = () => {
     rejectLabel: 'Cancelar',
     acceptLabel: 'Crear',
     accept: async () => {
-      await store.enviarJson();
+      isValid.value = store.isFullRequestBodyCorrect();
+      if (isValid.value === true) {
+        store.enviarJson;
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+        toast.add({ severity: 'error', summary: 'Cancelado', detail: 'Algún campo del formulario esta vacío', life: 3000 });
+      }
     },
-    reject: () => {
-      toast.add({ severity: 'error', summary: 'Cancelado', detail: 'Creación de juego cancleada correctamente', life: 3000 });
-    }
   });
 };
 
@@ -46,11 +49,8 @@ const confirm2 = () => {
     rejectClass: 'p-button-secondary p-button-outlined',
     acceptClass: 'p-button-danger',
     accept: () => {
-      toast.add({ severity: 'success', summary: 'Cancelado', detail: 'Se ha cacelado la creación de juego', life: 3000 });
+      toast.add({ severity: 'success', summary: 'Borrado', detail: 'Se han borrado todos los campos', life: 3000 });
     },
-    reject: () => {
-      toast.add({ severity: 'error', summary: 'Error', detail: 'Se ha producido algun error mientras se producía la operació', life: 3000 });
-    }
   });
 };
 
@@ -58,6 +58,8 @@ const confirm2 = () => {
 
 // Accedemos a los stores
 const store = useJuegoStore();
+
+const isValid = ref(true);
 
 const storeJuegos = gameTypeStore();
 const storeCursos = cursoStore();
@@ -81,16 +83,20 @@ const { setAsignatuaJuegoData: asignaturas } = storeToRefs(storeAsignaturas);
     <h1>Crear Juegos</h1>
     <form @submit.prevent="">
       <div class="game_properties">
-        <CreateGameTextInput :label-text="'Nombre del Juego'" :letra="''"></CreateGameTextInput>
-        <CreateGameSelector :label-text="'Juego'" :array="juegos" :option-label="'tipo'"></CreateGameSelector>
-        <CreateGameSelector :label-text="'Curso'" :array="cursos" :option-label="'nombreCurso'"></CreateGameSelector>
-        <CreateGameSelector :label-text="'Asignatura'" :array="asignaturas" :option-label="'nombreAsignatura'">
+        <CreateGameTextInput :label-text="'Nombre del Juego'" :letra="''" :is-valid="!isValid"></CreateGameTextInput>
+        <CreateGameSelector :label-text="'Juego'" :array="juegos" :option-label="'tipo'" :is-valid="!isValid">
+        </CreateGameSelector>
+        <CreateGameSelector :label-text="'Curso'" :array="cursos" :option-label="'nombreCurso'" :is-valid="!isValid">
+        </CreateGameSelector>
+        <CreateGameSelector :label-text="'Asignatura'" :array="asignaturas" :option-label="'nombreAsignatura'"
+          :is-valid="!isValid">
         </CreateGameSelector>
       </div>
-      <CreateGameTextInput :label-text="'Tema del Juego'" :letra="''" </CreateGameTextInput>
+      <CreateGameTextInput :label-text="'Tema del Juego'" :letra="''" :is-valid="!isValid" </CreateGameTextInput>
         <br>
         <div v-for="(pregunta, index) in store.RequestPreguntas" :key="index">
-          <CreateGameQARow :letra="pregunta.letra" :label-answer-text="'Respuesta'" :label-question-text="'Pregunta'">
+          <CreateGameQARow :letra="pregunta.letra" :label-answer-text="'Respuesta'" :label-question-text="'Pregunta'"
+            :is-valid="!isValid">
           </CreateGameQARow>
         </div>
     </form>

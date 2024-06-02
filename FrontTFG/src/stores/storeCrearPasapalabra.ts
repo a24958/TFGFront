@@ -46,6 +46,48 @@ const RequestPreguntas = ref<PreguntaPasapalbra[]>(Array.from({ length: 26 }, (_
 export const useJuegoStore = defineStore('juegoStore', () => {
   const resultadoJson = ref('');
 
+  function isRequestHeaderCorrect() {
+    if (RequestBodyData.value.name.trim() === '' || RequestBodyData.value.name.trim() === null) {
+      return false;
+    }
+    if (RequestBodyData.value.temaJuego.trim() === '' || RequestBodyData.value.temaJuego.trim() === null) {
+      return false;
+    }
+    if (RequestBodyData.value.idAsignatura === 0 || RequestBodyData.value.idAsignatura === null) {
+      return false;
+    }
+    if (RequestBodyData.value.idCurso === 0 || RequestBodyData.value.idCurso === null) {
+      return false;
+    }
+    if (RequestBodyData.value.idJuego === 0 || RequestBodyData.value.idJuego === null) {
+      return false;
+    }
+    return true;
+  }
+
+  function isRequestPreguntasCorrect() {
+    if (RequestPreguntas.value.length === 0) {
+      return false;
+    }
+
+    for (let index = 0; index < RequestPreguntas.value.length; index++) {
+      if (RequestPreguntas.value[index].pregunta.trim() === null || RequestPreguntas.value[index].pregunta.trim() === '') {
+        return false;
+      }
+
+      if (RequestPreguntas.value[index].respuesta.trim() === null || RequestPreguntas.value[index].pregunta.trim() === '') {
+        return false;
+      }
+
+    }
+
+    return true;
+  }
+
+  function isFullRequestBodyCorrect() {
+    return isRequestHeaderCorrect() && isRequestPreguntasCorrect();
+  }
+
   function fillRequestHeader(value: string, object: any, requestOption: string) {
     var id = object?.id ?? 0;
 
@@ -115,5 +157,5 @@ export const useJuegoStore = defineStore('juegoStore', () => {
     }
   }
 
-  return { resultadoJson, enviarJson, fillRequestHeader, RequestPreguntas, fillRequestPreguntas };
+  return { resultadoJson, enviarJson, fillRequestHeader, RequestPreguntas, fillRequestPreguntas, isFullRequestBodyCorrect };
 });

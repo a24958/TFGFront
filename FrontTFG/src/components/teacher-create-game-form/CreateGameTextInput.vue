@@ -12,6 +12,7 @@ const value = ref('');
 const props = defineProps<{
     letra: string;
     labelText: string;
+    isValid: boolean
 }>();
 
 const dynamicClass = computed(() => ({
@@ -20,6 +21,7 @@ const dynamicClass = computed(() => ({
 }))
 
 watch(value, (newValue, oldValue) => {
+
     if (props.labelText === 'Tema del Juego' || props.labelText === 'Nombre del Juego') {
         storeCrearPasapalabra.fillRequestHeader(newValue, 0, props.labelText);
     } else {
@@ -33,7 +35,7 @@ watch(value, (newValue, oldValue) => {
 <template>
     <div class="card flex justify-content-center">
         <FloatLabel>
-            <InputText id="username" v-model="value" :class="dynamicClass" />
+            <InputText id="username" v-model="value" :class="dynamicClass" :invalid="isValid && value.trim() === ''" />
             <label for="username">{{ labelText }}</label>
         </FloatLabel>
     </div>

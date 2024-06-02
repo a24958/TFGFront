@@ -11,6 +11,7 @@ const props = defineProps<{
     labelText: string,
     array: any,
     optionLabel: string,
+    isValid: boolean,
 }>();
 
 const selectedOption = ref();
@@ -23,8 +24,8 @@ watch(selectedOption, (newValue, oldValue) => {
 <template>
     <div class="card flex justify-content-center">
         <FloatLabel>
-            <Dropdown v-model="selectedOption" :options="props.array" showClear :optionLabel="optionLabel"
-                class="w-full md:w-14rem" id="gs" style="width: 14rem;" />
+            <Dropdown v-model="selectedOption" :options="props.array" :invalid="isValid && selectedOption === null"
+                showClear :optionLabel="optionLabel" class="w-full md:w-14rem" id="gs" style="width: 14rem;" />
             <label for="gs">{{ labelText }}</label>
         </FloatLabel>
     </div>
