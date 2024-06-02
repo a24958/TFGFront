@@ -2,20 +2,30 @@
 import Dropdown from "primevue/dropdown";
 import FloatLabel from "primevue/floatlabel";
 import { ref } from "vue";
+import { watch } from 'vue';
+import { useJuegoStore } from '@/stores/storeCrearPasapalabra';
+
+const storeCrearPasapalabra = useJuegoStore();
 
 const props = defineProps<{
     labelText: string,
-    array: {}[]
+    array: any,
+    optionLabel: string,
+    isValid: boolean,
 }>();
 
-const selectedCity = ref();
+const selectedOption = ref();
+
+watch(selectedOption, (newValue, oldValue) => {
+    storeCrearPasapalabra.fillRequestHeader("", newValue, props.labelText);
+});
 </script>
 
 <template>
     <div class="card flex justify-content-center">
         <FloatLabel>
-            <Dropdown v-model="selectedCity" :options="props.array" showClear optionLabel="name"
-                class="w-full md:w-14rem" id="gs" style="width: 14rem;" />
+            <Dropdown v-model="selectedOption" :options="props.array" :invalid="isValid && selectedOption === null"
+                showClear :optionLabel="optionLabel" class="w-full md:w-14rem" id="gs" style="width: 14rem;" />
             <label for="gs">{{ labelText }}</label>
         </FloatLabel>
     </div>

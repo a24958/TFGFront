@@ -5,14 +5,17 @@ const props = defineProps<{
     letra: string,
     labelQuestionText: string,
     labelAnswerText: string,
+    isValid: boolean,
 }>();
 </script>
 
 <template>
     <div>
         <p>{{ letra }}</p>
-        <CreateGameTextInput :label-text="labelQuestionText" class="inputs"></CreateGameTextInput>
-        <CreateGameTextInput :label-text="labelAnswerText" class="inputs"></CreateGameTextInput>
+        <CreateGameTextInput :label-text="labelQuestionText" :letra="letra" :is-valid="isValid" class="inputs">
+        </CreateGameTextInput>
+        <CreateGameTextInput :label-text="labelAnswerText" :letra="letra" :is-valid="isValid" class="inputs">
+        </CreateGameTextInput>
     </div>
 </template>
 

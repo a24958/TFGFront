@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onBeforeMount } from 'vue';
 import { useJuegoStore } from '@/stores/storeCrearPasapalabra';
 import CreateGameTextInput from './teacher-create-game-form/CreateGameTextInput.vue';
 import CreateGameSelector from './teacher-create-game-form/CreateGameSelector.vue';
@@ -8,11 +8,13 @@ import Button from 'primevue/button';
 import Toast from 'primevue/toast';
 import ConfirmDialog from 'primevue/confirmdialog';
 import 'primeicons/primeicons.css'
-import FileUpload from 'primevue/fileupload';
-import Pasapalabra from './Pasapalabra.vue';
 
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
+import { gameTypeStore } from '@/stores/storeGameType';
+import { storeToRefs } from 'pinia';
+import { cursoStore } from '@/stores/storeCurso';
+import { asignaturaJuegoStore } from '@/stores/storeAsignaturaJuego';
 
 const confirm = useConfirm();
 const toast = useToast();
@@ -25,12 +27,15 @@ const confirm1 = () => {
     rejectClass: 'p-button-secondary p-button-outlined',
     rejectLabel: 'Cancelar',
     acceptLabel: 'Crear',
-    accept: () => {
-      toast.add({ severity: 'success', summary: 'Creado', detail: 'Juego creado correctamente', life: 3000 });
+    accept: async () => {
+      isValid.value = store.isFullRequestBodyCorrect();
+      if (isValid.value === true) {
+        store.enviarJson;
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+        toast.add({ severity: 'error', summary: 'Cancelado', detail: 'Algún campo del formulario esta vacío', life: 3000 });
+      }
     },
-    reject: () => {
-      toast.add({ severity: 'error', summary: 'Cancelado', detail: 'Creación de juego cancleada correctamente', life: 3000 });
-    }
   });
 };
 
@@ -44,79 +49,56 @@ const confirm2 = () => {
     rejectClass: 'p-button-secondary p-button-outlined',
     acceptClass: 'p-button-danger',
     accept: () => {
-      toast.add({ severity: 'success', summary: 'Cancelado', detail: 'Se ha cacelado la creación de juego', life: 3000 });
+      toast.add({ severity: 'success', summary: 'Borrado', detail: 'Se han borrado todos los campos', life: 3000 });
     },
-    reject: () => {
-      toast.add({ severity: 'error', summary: 'Error', detail: 'Se ha producido algun error mientras se producía la operació', life: 3000 });
-    }
   });
 };
 
 
 
-// Accedemos al store
-const { juego, resultadoJson, generarJson, enviarJson } = useJuegoStore();
+// Accedemos a los stores
+const store = useJuegoStore();
 
-const juegos = [{ name: 'Pasapalabra' }]
-const cursos = [
-  { name: '1º Primaria' },
-  { name: '2º Primaria' },
-  { name: '3º Primaria' },
-  { name: '4º Primaria' },
-  { name: '5º Primaria' },
-  { name: '6º Primaria' },
-]
-const asignaturas = [
-  { name: 'Literatura' },
-  { name: 'Matemáticas' },
-  { name: 'Conocimiento del Medio' },
-  { name: 'Artes Plásticas' },
-  { name: 'Inglés' },
-]
-// Definimos la función submitForm
-const submitForm = async () => {
-  generarJson();
-  await enviarJson();
-};
+const isValid = ref(true);
 
-// Configuramos el ciclo de vida del componente
-onMounted(() => {
-  juego.preguntas = Array.from({ length: 26 }, (_, i) => ({
-    letra: String.fromCharCode(65 + i),
-    pregunta: '',
-    respuesta: ''
-  }));
-});
+const storeJuegos = gameTypeStore();
+const storeCursos = cursoStore();
+const storeAsignaturas = asignaturaJuegoStore();
 
-const onAdvancedUpload = (event: any) => {
-  toast.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 });
-};
+onBeforeMount(async () => {
+  await storeJuegos.getTipoJuego();
+  await storeCursos.getCursos();
+  await storeAsignaturas.getAsignaturas();
+})
+
+const { seatData: juegos } = storeToRefs(storeJuegos);
+const { seatData: cursos } = storeToRefs(storeCursos);
+const { setAsignatuaJuegoData: asignaturas } = storeToRefs(storeAsignaturas);
+
+
 </script>
 
 <template>
   <div class="create_game_form_container">
     <h1>Crear Juegos</h1>
-    <div class="card">
-      <FileUpload name="demo[]" url="/api/upload" @upload="onAdvancedUpload($event)" :multiple="true" accept=".csv"
-        :maxFileSize="1000000">
-        <template #empty>
-          <p>Drag and drop files to here to upload.</p>
-        </template>
-      </FileUpload>
-    </div>
-    <form @submit.prevent="submitForm">
+    <form @submit.prevent="">
       <div class="game_properties">
-        <CreateGameTextInput :label-text="'Nombre del Juego'"></CreateGameTextInput>
-        <CreateGameSelector :label-text="'Juego'" :array="juegos"></CreateGameSelector>
-        <CreateGameSelector :label-text="'Curso'" :array="cursos"></CreateGameSelector>
-        <CreateGameSelector :label-text="'Asignatura'" :array="asignaturas"></CreateGameSelector>
+        <CreateGameTextInput :label-text="'Nombre del Juego'" :letra="''" :is-valid="!isValid"></CreateGameTextInput>
+        <CreateGameSelector :label-text="'Juego'" :array="juegos" :option-label="'tipo'" :is-valid="!isValid">
+        </CreateGameSelector>
+        <CreateGameSelector :label-text="'Curso'" :array="cursos" :option-label="'nombreCurso'" :is-valid="!isValid">
+        </CreateGameSelector>
+        <CreateGameSelector :label-text="'Asignatura'" :array="asignaturas" :option-label="'nombreAsignatura'"
+          :is-valid="!isValid">
+        </CreateGameSelector>
       </div>
-      <CreateGameTextInput :label-text="'Tema del Juego'"></CreateGameTextInput>
-      <br>
-      <div v-for="(pregunta, index) in juego.preguntas" :key="index">
-        <CreateGameQARow :letra="pregunta.letra" :label-answer-text="'Respuesta'" :label-question-text="'Pregunta'">
-        </CreateGameQARow>
-      </div>
+      <CreateGameTextInput :label-text="'Tema del Juego'" :letra="''" :is-valid="!isValid" </CreateGameTextInput>
+        <br>
+        <div v-for="(pregunta, index) in store.RequestPreguntas" :key="index">
+          <CreateGameQARow :letra="pregunta.letra" :label-answer-text="'Respuesta'" :label-question-text="'Pregunta'"
+            :is-valid="!isValid">
+          </CreateGameQARow>
+        </div>
     </form>
     <Toast />
     <ConfirmDialog></ConfirmDialog>
