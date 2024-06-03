@@ -83,14 +83,16 @@ export const asignaturaStore = defineStore('asignaturaFunctions', () => {
         }
     }
 
-    async function addAsignatura(nuevaAsignatura: Omit<Asignatura, 'id'>) {
+    async function addAsignatura(nombreAsignatura: string) {
         const requestOptions: RequestInit = {
             method: 'POST',
             mode: 'cors',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(nuevaAsignatura)
+            body: JSON.stringify({
+                "nombreAsignatura": nombreAsignatura
+            })
         };
 
         try {
@@ -100,9 +102,29 @@ export const asignaturaStore = defineStore('asignaturaFunctions', () => {
                 throw new Error('Error en la solicitud: ' + response.statusText);
             }
 
-            const json = await response.json();
-            asignaturas.push(json);
-            return json
+        } catch (error) {
+            console.log('Error al hacer la llamada a la API:', error);
+        }
+    }
+
+    async function editAsignatura(asignatura: Asignatura) {
+        const requestOptions: RequestInit = {
+            method: 'PUT',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "nombreAsignatura": asignatura.nombreAsignatura
+            })
+        };
+
+        try {
+            const response = await fetch(`http://localhost:5183/Asignatura/${asignatura.id}`, requestOptions);
+
+            if (!response.ok) {
+                throw new Error('Error en la solicitud: ' + response.statusText);
+            }
 
         } catch (error) {
             console.log('Error al hacer la llamada a la API:', error);
@@ -110,5 +132,5 @@ export const asignaturaStore = defineStore('asignaturaFunctions', () => {
     }
 
 
-    return { asignaturas, getAsignaturas, deleteAsignatura, addAsignatura }
+    return { asignaturas, getAsignaturas, deleteAsignatura, addAsignatura, editAsignatura }
 })
