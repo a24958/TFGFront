@@ -6,7 +6,7 @@ import GameForm from '@/components/home-form/GameForm.vue';
 <template>
     <section>
         <article>
-            <div>
+            <div class="test">
                 <h2>NUESTROS JUEGOS MAS POPULARES</h2>
                 <MostPopularGames></MostPopularGames>
             </div>
@@ -21,11 +21,20 @@ import GameForm from '@/components/home-form/GameForm.vue';
 </template>
 
 <style scoped>
+.test {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
 section {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
+    margin-bottom: 24px;
+    margin-left: 24px;
 }
 
 h2 {

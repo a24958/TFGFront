@@ -159,6 +159,10 @@ function closeDialog() {
     showPanel.value = !showPanel.value;
     startTimer();
 }
+
+function getWidthScreen() {
+    return window.innerWidth;
+}
 </script>
 
 <template>
@@ -194,7 +198,8 @@ function closeDialog() {
                         class="input_style" />
                 </div>
                 <div class="card flex justify-content-center">
-                    <Button label="Pasapalabra" @click="nextQuestion" severity="secondary" class="button_style" />
+                    <Button :label="getWidthScreen() < 700 ? 'Pasa' : 'Pasapalabra'" @click="nextQuestion"
+                        severity="secondary" class="button_style" />
                 </div>
                 <div class="time">
                     <p>{{ timeValue }}</p>
@@ -209,7 +214,7 @@ function closeDialog() {
 .current_letter {
     display: flex;
     align-items: center;
-    font-size: 190px;
+    font-size: 150px;
     margin-top: 0;
 }
 
@@ -219,9 +224,9 @@ function closeDialog() {
     justify-content: center;
     align-items: center;
     position: absolute;
-    top: 12%;
-    left: 18%;
-    font-size: 50px;
+    top: 16%;
+    left: 15%;
+    font-size: 40px;
     color: white;
     font-weight: bold;
     width: 300px;
@@ -238,12 +243,12 @@ function closeDialog() {
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    font-size: 24px;
+    font-size: 18px;
     font-weight: bold;
     box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
     border: 2px solid white;
-    height: 70px;
-    width: 70px;
+    height: 50px;
+    width: 50px;
     color: white;
 }
 
@@ -264,7 +269,7 @@ function closeDialog() {
     font-size: 24px;
     font-weight: bold;
     color: white;
-    margin-bottom: 50px;
+    margin-bottom: 16px;
     margin-left: 16px;
 }
 
@@ -273,7 +278,8 @@ function closeDialog() {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 100px;
+    margin-left: 16px;
+    margin-top: 60px;
     font-size: 22px;
     color: white;
 }
@@ -283,7 +289,7 @@ function closeDialog() {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    width: 475px;
+    width: 400px;
     margin-top: 22px;
 }
 
@@ -296,8 +302,8 @@ function closeDialog() {
 
 #rosco-container {
     position: relative;
-    width: 450px;
-    height: 450px;
+    width: 400px;
+    height: 400px;
 }
 
 #rosco {
@@ -315,107 +321,107 @@ function closeDialog() {
 }
 
 #rosco li:nth-child(1) {
-    transform: rotate(-90deg) translate(250px) rotate(90deg);
+    transform: rotate(-90deg) translate(190px) rotate(90deg);
 }
 
 #rosco li:nth-child(2) {
-    transform: rotate(-76.15deg) translate(250px) rotate(76.15deg);
+    transform: rotate(-76.15deg) translate(190px) rotate(76.15deg);
 }
 
 #rosco li:nth-child(3) {
-    transform: rotate(-62.3deg) translate(250px) rotate(62.3deg);
+    transform: rotate(-62.3deg) translate(190px) rotate(62.3deg);
 }
 
 #rosco li:nth-child(4) {
-    transform: rotate(-48.45deg) translate(250px) rotate(48.45deg);
+    transform: rotate(-48.45deg) translate(190px) rotate(48.45deg);
 }
 
 #rosco li:nth-child(5) {
-    transform: rotate(-34.6deg) translate(250px) rotate(34.6deg);
+    transform: rotate(-34.6deg) translate(190px) rotate(34.6deg);
 }
 
 #rosco li:nth-child(6) {
-    transform: rotate(-20.75deg) translate(250px) rotate(20.75deg);
+    transform: rotate(-20.75deg) translate(190px) rotate(20.75deg);
 }
 
 #rosco li:nth-child(7) {
-    transform: rotate(-6.9deg) translate(250px) rotate(6.9deg);
+    transform: rotate(-6.9deg) translate(190px) rotate(6.9deg);
 }
 
 #rosco li:nth-child(8) {
-    transform: rotate(6.95deg) translate(250px) rotate(-6.95deg);
+    transform: rotate(6.95deg) translate(190px) rotate(-6.95deg);
 }
 
 #rosco li:nth-child(9) {
-    transform: rotate(20.8deg) translate(250px) rotate(-20.8deg);
+    transform: rotate(20.8deg) translate(190px) rotate(-20.8deg);
 }
 
 #rosco li:nth-child(10) {
-    transform: rotate(34.65deg) translate(250px) rotate(-34.65deg);
+    transform: rotate(34.65deg) translate(190px) rotate(-34.65deg);
 }
 
 #rosco li:nth-child(11) {
-    transform: rotate(48.5deg) translate(250px) rotate(-48.5deg);
+    transform: rotate(48.5deg) translate(190px) rotate(-48.5deg);
 }
 
 #rosco li:nth-child(12) {
-    transform: rotate(62.35deg) translate(250px) rotate(-62.35deg);
+    transform: rotate(62.35deg) translate(190px) rotate(-62.35deg);
 }
 
 #rosco li:nth-child(13) {
-    transform: rotate(76.2deg) translate(250px) rotate(-76.2deg);
+    transform: rotate(76.2deg) translate(190px) rotate(-76.2deg);
 }
 
 #rosco li:nth-child(14) {
-    transform: rotate(90.05deg) translate(250px) rotate(-90.05deg);
+    transform: rotate(90.05deg) translate(190px) rotate(-90.05deg);
 }
 
 #rosco li:nth-child(15) {
-    transform: rotate(103.9deg) translate(250px) rotate(-103.9deg);
+    transform: rotate(103.9deg) translate(190px) rotate(-103.9deg);
 }
 
 #rosco li:nth-child(16) {
-    transform: rotate(117.75deg) translate(250px) rotate(-117.75deg);
+    transform: rotate(117.75deg) translate(190px) rotate(-117.75deg);
 }
 
 #rosco li:nth-child(17) {
-    transform: rotate(131.6deg) translate(250px) rotate(-131.6deg);
+    transform: rotate(131.6deg) translate(190px) rotate(-131.6deg);
 }
 
 #rosco li:nth-child(18) {
-    transform: rotate(145.45deg) translate(250px) rotate(-145.45deg);
+    transform: rotate(145.45deg) translate(190px) rotate(-145.45deg);
 }
 
 #rosco li:nth-child(19) {
-    transform: rotate(159.3deg) translate(250px) rotate(-159.3deg);
+    transform: rotate(159.3deg) translate(190px) rotate(-159.3deg);
 }
 
 #rosco li:nth-child(20) {
-    transform: rotate(173.15deg) translate(250px) rotate(-173.15deg);
+    transform: rotate(173.15deg) translate(190px) rotate(-173.15deg);
 }
 
 #rosco li:nth-child(21) {
-    transform: rotate(187deg) translate(250px) rotate(-187deg);
+    transform: rotate(187deg) translate(190px) rotate(-187deg);
 }
 
 #rosco li:nth-child(22) {
-    transform: rotate(200.85deg) translate(250px) rotate(-200.85deg);
+    transform: rotate(200.85deg) translate(190px) rotate(-200.85deg);
 }
 
 #rosco li:nth-child(23) {
-    transform: rotate(214.7deg) translate(250px) rotate(-214.7deg);
+    transform: rotate(214.7deg) translate(190px) rotate(-214.7deg);
 }
 
 #rosco li:nth-child(24) {
-    transform: rotate(228.55deg) translate(250px) rotate(-228.55deg);
+    transform: rotate(228.55deg) translate(190px) rotate(-228.55deg);
 }
 
 #rosco li:nth-child(25) {
-    transform: rotate(242.4deg) translate(250px) rotate(-242.4deg);
+    transform: rotate(242.4deg) translate(190px) rotate(-242.4deg);
 }
 
 #rosco li:nth-child(26) {
-    transform: rotate(256.25deg) translate(250px) rotate(-256.25deg);
+    transform: rotate(256.25deg) translate(190px) rotate(-256.25deg);
 }
 
 @keyframes parpadeo {
@@ -432,5 +438,150 @@ function closeDialog() {
 
 .parpadeo {
     animation: parpadeo 1.2s infinite;
+}
+
+@media screen and (min-width: 800px) {
+    .pregunta {
+        margin-left: 0px;
+    }
+}
+
+@media screen and (min-width: 700px) {
+    .current_letter {
+        font-size: 190px;
+    }
+
+    .title {
+        margin-bottom: 50px;
+    }
+
+    .pregunta {
+        margin-top: 100px;
+    }
+
+    .current_letter_container {
+        top: 12%;
+        left: 18%;
+        font-size: 50px;
+    }
+
+    .time {
+        height: 70px;
+        width: 70px;
+        font-size: 24px;
+    }
+
+    .inputs {
+        width: 475px;
+    }
+
+    #rosco-container {
+        width: 450px;
+        height: 450px;
+    }
+
+    #rosco li:nth-child(1) {
+        transform: rotate(-90deg) translate(250px) rotate(90deg);
+    }
+
+    #rosco li:nth-child(2) {
+        transform: rotate(-76.15deg) translate(250px) rotate(76.15deg);
+    }
+
+    #rosco li:nth-child(3) {
+        transform: rotate(-62.3deg) translate(250px) rotate(62.3deg);
+    }
+
+    #rosco li:nth-child(4) {
+        transform: rotate(-48.45deg) translate(250px) rotate(48.45deg);
+    }
+
+    #rosco li:nth-child(5) {
+        transform: rotate(-34.6deg) translate(250px) rotate(34.6deg);
+    }
+
+    #rosco li:nth-child(6) {
+        transform: rotate(-20.75deg) translate(250px) rotate(20.75deg);
+    }
+
+    #rosco li:nth-child(7) {
+        transform: rotate(-6.9deg) translate(250px) rotate(6.9deg);
+    }
+
+    #rosco li:nth-child(8) {
+        transform: rotate(6.95deg) translate(250px) rotate(-6.95deg);
+    }
+
+    #rosco li:nth-child(9) {
+        transform: rotate(20.8deg) translate(250px) rotate(-20.8deg);
+    }
+
+    #rosco li:nth-child(10) {
+        transform: rotate(34.65deg) translate(250px) rotate(-34.65deg);
+    }
+
+    #rosco li:nth-child(11) {
+        transform: rotate(48.5deg) translate(250px) rotate(-48.5deg);
+    }
+
+    #rosco li:nth-child(12) {
+        transform: rotate(62.35deg) translate(250px) rotate(-62.35deg);
+    }
+
+    #rosco li:nth-child(13) {
+        transform: rotate(76.2deg) translate(250px) rotate(-76.2deg);
+    }
+
+    #rosco li:nth-child(14) {
+        transform: rotate(90.05deg) translate(250px) rotate(-90.05deg);
+    }
+
+    #rosco li:nth-child(15) {
+        transform: rotate(103.9deg) translate(250px) rotate(-103.9deg);
+    }
+
+    #rosco li:nth-child(16) {
+        transform: rotate(117.75deg) translate(250px) rotate(-117.75deg);
+    }
+
+    #rosco li:nth-child(17) {
+        transform: rotate(131.6deg) translate(250px) rotate(-131.6deg);
+    }
+
+    #rosco li:nth-child(18) {
+        transform: rotate(145.45deg) translate(250px) rotate(-145.45deg);
+    }
+
+    #rosco li:nth-child(19) {
+        transform: rotate(159.3deg) translate(250px) rotate(-159.3deg);
+    }
+
+    #rosco li:nth-child(20) {
+        transform: rotate(173.15deg) translate(250px) rotate(-173.15deg);
+    }
+
+    #rosco li:nth-child(21) {
+        transform: rotate(187deg) translate(250px) rotate(-187deg);
+    }
+
+    #rosco li:nth-child(22) {
+        transform: rotate(200.85deg) translate(250px) rotate(-200.85deg);
+    }
+
+    #rosco li:nth-child(23) {
+        transform: rotate(214.7deg) translate(250px) rotate(-214.7deg);
+    }
+
+    #rosco li:nth-child(24) {
+        transform: rotate(228.55deg) translate(250px) rotate(-228.55deg);
+    }
+
+    #rosco li:nth-child(25) {
+        transform: rotate(242.4deg) translate(250px) rotate(-242.4deg);
+    }
+
+    #rosco li:nth-child(26) {
+        transform: rotate(256.25deg) translate(250px) rotate(-256.25deg);
+    }
 }
 </style>

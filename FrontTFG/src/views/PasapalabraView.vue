@@ -32,4 +32,16 @@ div {
     height: 105vh;
     background: linear-gradient(#3663aff7, #005eff82);
 }
+
+@media screen and (min-width: 500px) {
+    div {
+        height: 120vh;
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    div {
+        height: 105vh;
+    }
+}
 </style>
