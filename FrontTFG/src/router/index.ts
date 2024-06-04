@@ -10,6 +10,8 @@ import HomeView from '@/views/HomeView.vue'
 import CrearPasapalabraView from '@/views/CrearPasapalabraView.vue'
 import GameCardsView from '@/views/GameCardsView.vue'
 import TeacherGraphView from '@/views/TeacherGraphView.vue'
+import UsuarioEstadisticasView from '@/views/UsuarioEstadisticasView.vue'
+
 
 
 
@@ -71,6 +73,16 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
+      meta: {
+        showHeader: true,
+        requiresAdmin: false,
+        requiresAuth: false,
+      }
+    },
+    {
+      path: '/usuario',
+      name: 'usuario',
+      component: UsuarioEstadisticasView,
       meta: {
         showHeader: true,
         requiresAdmin: false,
