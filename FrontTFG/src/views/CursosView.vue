@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import CursosSection from '@/components/CursosSection.vue';
+import CursosSection from '@/components/teachers-intranet/CursosSection.vue';
 import { cursoStore } from '@/stores/storeCurso';
 import { storeToRefs } from 'pinia';
 import { onBeforeMount } from 'vue';

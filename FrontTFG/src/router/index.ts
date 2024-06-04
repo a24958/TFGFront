@@ -29,7 +29,10 @@ const router = createRouter({
     {
       path: '/intranet/curso',
       name: 'curso',
-      component: CursoView
+      component: CursoView,
+      meta: {
+        showHeader: false,
+      }
     },
     {
       path: '/intranet/asignatura',
@@ -40,6 +43,9 @@ const router = createRouter({
       //   showHeader: true,
       //   requiresFetch: true
       // }
+      meta: {
+        showHeader: false,
+      }
     },
     {
       path: '/login',
