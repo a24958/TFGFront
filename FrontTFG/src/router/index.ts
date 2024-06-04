@@ -31,17 +31,24 @@ const router = createRouter({
     {
       path: '/intranet/curso',
       name: 'curso',
-      component: CursoView
+      component: CursoView,
+      props: true,
+      meta: {
+        showHeader: true,
+        requiresAdmin: true,
+        requiresAuth: true,
+      }
     },
     {
       path: '/intranet/asignatura',
       name: 'asignatura',
       component: AsignaturasView,
-      // props: true,
-      // meta: {
-      //   showHeader: true,
-      //   requiresFetch: true
-      // }
+      props: true,
+      meta: {
+        showHeader: true,
+        requiresAdmin: true,
+        requiresAuth: true,
+      }
     },
     {
       path: '/login',
@@ -64,7 +71,7 @@ const router = createRouter({
       name: 'intranet',
       component: IntranetView,
       meta: {
-        showHeader: false,
+        showHeader: true,
         requiresAdmin: true,
         requiresAuth: true,
       }
