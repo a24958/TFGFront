@@ -8,7 +8,7 @@ import router from "@/router";
 const store = usuarioEstadisticasStore();
 
 const userData = localStorage.getItem('userData');
-const id = userData ? JSON.parse(userData).id : null;
+const id = userData ? JSON.parse(userData).clase : null;
 onBeforeMount(async () => {
     await store.getUsuarioById(id);
 });
