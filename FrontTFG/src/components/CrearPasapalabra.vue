@@ -19,7 +19,8 @@ import { asignaturaJuegoStore } from '@/stores/storeAsignaturaJuego';
 
 import Papa from 'papaparse';
 import { saveAs } from 'file-saver';
-import { toRefs } from 'vue';
+
+import TeacherIntranetMenu from './general-utils/TeacherIntranetMenu.vue';
 
 const confirm = useConfirm();
 const toast = useToast();
@@ -269,6 +270,7 @@ function closeDialog() {
 </script>
 
 <template>
+  <TeacherIntranetMenu></TeacherIntranetMenu>
   <div class="create_game_form_container">
     <h1>Crear Juegos</h1>
     <Dialog v-model:visible="showPanel" modal :header="'ATENCION'" :style="{ width: '50rem' }"
