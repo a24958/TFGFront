@@ -10,6 +10,7 @@ import HomeView from '@/views/HomeView.vue'
 import CrearPasapalabraView from '@/views/CrearPasapalabraView.vue'
 import GameCardsView from '@/views/GameCardsView.vue'
 import TeacherGraphView from '@/views/TeacherGraphView.vue'
+import PasapalabraMultiplayerView from '@/views/PasapalabraMultiplayerView.vue'
 
 
 
@@ -21,6 +22,15 @@ const router = createRouter({
       path: '/pasapalabra/:id',
       name: 'pasapalabra-id',
       component: PasapalabraView,
+      meta: {
+        showHeader: false,
+        requiresFetch: true
+      }
+    },
+    {
+      path: '/multiplayer',
+      name: 'multiplayer',
+      component: PasapalabraMultiplayerView,
       meta: {
         showHeader: false,
         requiresFetch: true
