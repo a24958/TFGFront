@@ -6,7 +6,8 @@ interface User {
     email: string,
     nombre: string,
     avatar: string,
-    rol: string
+    rol: string,
+    clase: number
 }
 
 const user = ref<User>({
@@ -14,7 +15,9 @@ const user = ref<User>({
     email: '',
     nombre: '',
     avatar: '',
-    rol: ''
+    rol: '',
+    clase: 0
+
 });
 
 
@@ -60,7 +63,8 @@ export const loginStore = defineStore('loginFunctions', () => {
                     "email": json["email"],
                     "nombre": json["nombre"],
                     "avatar": json["avatar"],
-                    "rol": json["rol"]
+                    "rol": json["rol"],
+                    "clase": json["clase"]
             }
             console.log(userData);
 
@@ -109,7 +113,8 @@ export const loginStore = defineStore('loginFunctions', () => {
                     "email": json["email"],
                     "nombre": json["nombre"],
                     "avatar": json["avatar"],
-                    "rol": json["rol"]
+                    "rol": json["rol"],
+                    "clase": json["clase"]
             }
             console.log(userData);
 
