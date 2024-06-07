@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import MostPopularGames from '@/components/MostPopularGames.vue';
 import GameForm from '@/components/home-form/GameForm.vue';
+import Button from 'primevue/button';
+import router from '@/router';
+
+const load = async () => {
+    router.push({ name: 'multiplayer' })
+}
 </script>
 
 <template>
@@ -10,6 +16,10 @@ import GameForm from '@/components/home-form/GameForm.vue';
                 <h2>NUESTROS JUEGOS MAS POPULARES</h2>
                 <MostPopularGames></MostPopularGames>
             </div>
+        </article>
+        <article>
+            <Button type="button" label="Multijugador" icon="" @click="load"
+                style="width: 30rem; height: 5rem; " />
         </article>
         <article>
             <div style="width: 400px;">
