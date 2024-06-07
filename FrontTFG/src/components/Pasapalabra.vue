@@ -44,7 +44,7 @@ const idFirstQuestion = ref(0)
 const inputValue = ref('');
 const timeValue = ref(300);
 
-let intervalId = 0;
+
 
 const decrementTime = () => {
     if (timeValue.value > 0) {
@@ -54,7 +54,10 @@ const decrementTime = () => {
     }
 };
 
-const startTimer = () => {
+let startTimer: () => void;
+let intervalId: ReturnType<typeof setInterval>;
+
+startTimer = () => {
     intervalId = setInterval(decrementTime, 1000);
 };
 

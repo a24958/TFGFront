@@ -46,7 +46,7 @@ export const juegoStore = defineStore('juegoFunctions', () => {
         };
 
         try {
-            const response = await fetch(`http://localhost:5183/AsignaturaJuego/${parseInt(Id)}`, requestOptions);
+            const response = await fetch(`https://galactic2api.retocsv.es/AsignaturaJuego/${parseInt(Id)}`, requestOptions);
 
             if (!response.ok) {
                 throw new Error('Error en la solicitud: ' + response.statusText);

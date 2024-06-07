@@ -49,7 +49,7 @@ export const asignaturaJuegoStore = defineStore('asignaturaJuegoFunctions', () =
         };
 
         try {
-            const response = await fetch(`http://localhost:5183/Asignatura`, requestOptions);
+            const response = await fetch(`https://galactic2api.retocsv.es/Asignatura`, requestOptions);
 
             if (!response.ok) {
                 throw new Error('Error en la solicitud: ' + response.statusText);
@@ -84,7 +84,7 @@ export const asignaturaJuegoStore = defineStore('asignaturaJuegoFunctions', () =
         };
 
         try {
-            const response = await fetch(`http://localhost:5183/Asignatura/${parseInt(Id)}`, requestOptions);
+            const response = await fetch(`https://galactic2api.retocsv.es/Asignatura/${parseInt(Id)}`, requestOptions);
 
             if (!response.ok) {
                 throw new Error('Error en la solicitud: ' + response.statusText);

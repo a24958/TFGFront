@@ -50,7 +50,7 @@ export const loginStore = defineStore('loginFunctions', () => {
         requestOptions.body = JSON.stringify(data);
 
         try {
-            const response = await fetch('http://localhost:5183/login', requestOptions);
+            const response = await fetch('https://galactic2api.retocsv.es/login', requestOptions);
 
             if (!response.ok) {
                 throw new Error('Error en la solicitud: ' + response.statusText);
@@ -100,7 +100,7 @@ export const loginStore = defineStore('loginFunctions', () => {
         requestOptions.body = JSON.stringify(data);
 
         try {
-            const response = await fetch(`http://localhost:5183/register`, requestOptions);
+            const response = await fetch(`https://galactic2api.retocsv.es/register`, requestOptions);
 
             if (!response.ok) {
                 throw new Error('Error en la solicitud: ' + response.statusText);

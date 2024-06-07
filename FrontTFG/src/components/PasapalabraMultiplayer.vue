@@ -51,8 +51,8 @@ const timeValue1 = ref(300);
 const timeValue2 = ref(300);
 const showFirstsQuestions = ref(true);
 
-let intervalId1 = 0;
-let intervalId2 = 1;
+let intervalId1: ReturnType<typeof setInterval>;
+let intervalId2: ReturnType<typeof setInterval>;
 
 
 const decrementTime = () => {
