@@ -124,7 +124,8 @@ const router = createRouter({
       meta: {
         showHeader: true,
         requiresAdmin: false,
-        requiresAuth: false,
+        requiresAuth: true,
+        requiresTeacher: true,
       }
     },
     {
@@ -142,38 +143,37 @@ const router = createRouter({
       name: 'teacher-intranet-graphs',
       component: TeacherGraphView,
       meta: {
-        showHeader: false,
+        showHeader: true,
         requiresAdmin: false,
-        requiresAuth: false,
+        requiresAuth: true,
+        requiresTeacher: true,
+
       }
     },
   ]
 })
 
 router.beforeEach((to, from, next) => {
-  // Verifica si la ruta requiere autenticación y si el usuario tiene el rol adecuado
-  if (to.matched.some(record => record.meta.requiresAuth && record.meta.requiresAdmin)) {
-    const userData = localStorage.getItem('userData');
-    const rol = userData ? JSON.parse(userData).rol : null;
+  const userData = localStorage.getItem('userData');
+  const rol = userData ? JSON.parse(userData).rol : null;
 
+  if (to.matched.some(record => record.meta.requiresAuth && record.meta.requiresAdmin)) {
     // Verifica si el usuario tiene el rol de administrador
     if (rol !== 'Admin') {
       next('/login');
     } else {
       next();
     }
-  } else {
-    next();
-  }
-});
-
-router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth && record.meta.requiresGuest)) {
-    const userData = localStorage.getItem('userData');
-    const rol = userData ? JSON.parse(userData).rol : null;
-
-    // Verifica si el usuario tiene el Guest de administrador
-    if (rol !== 'Guest') {
+  } else if (to.matched.some(record => record.meta.requiresAuth && record.meta.requiresTeacher)) {
+    // Verifica si el usuario tiene el rol de profesor
+    if (rol !== 'Profesor') {
+      next('/login');
+    } else {
+      next();
+    }
+  } else if (to.matched.some(record => record.meta.requiresAuth && record.meta.requiresGuest)) {
+    // Verifica si el usuario tiene el rol de alumno
+    if (rol !== 'Alumno') {
       next('/login');
     } else {
       next();
@@ -183,4 +183,4 @@ router.beforeEach((to, from, next) => {
   }
 });
 
-export default router
+export default router;

@@ -56,7 +56,7 @@ export const usuarioEstadisticasStore = defineStore('usuarioEstadisticasStore', 
                 "name": json["name"],
                 "email": json["email"],
                 "media": json["media"],
-                "juegosCompletados": json["juegoCompletados"],
+                "juegosCompletados": json["juegosCompletados"],
                 "acertadas": json["acertadas"],
                 "falladas":json["falladas"],
                 "resultados": json["resultados"] || []
