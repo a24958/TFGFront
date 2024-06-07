@@ -60,23 +60,21 @@ export const cursoStore = defineStore('cursoFunctions', () => {
                 throw new Error('Error en la solicitud: ' + response.statusText);
             }
 
-            // Si la solicitud fue exitosa, actualizar la lista de cursos
-            const updatedCursos = seatData.value?.filter(curso => curso.id !== cursoId) || [];
-            setData(updatedCursos);
-
         } catch (error) {
             console.log('Error al hacer la llamada a la API:', error);
         }
     }
 
-    async function addCurso(nuevoCurso: Omit<Curso, 'id'>): Promise<Curso | null> {
+    async function addCurso(nombreCurso: string) {
         const requestOptions: RequestInit = {
             method: 'POST',
             mode: 'cors',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(nuevoCurso)
+            body: JSON.stringify({
+                "nombreCurso": nombreCurso
+            })
         };
 
         try {
@@ -86,16 +84,34 @@ export const cursoStore = defineStore('cursoFunctions', () => {
                 throw new Error('Error en la solicitud: ' + response.statusText);
             }
 
-            const json = await response.json();
-            const cursoAgregado: Curso = { id: json.id, nombreCurso: json.nombreCurso };
-            setData([...(seatData.value || []), cursoAgregado]);
-            return cursoAgregado;
-
         } catch (error) {
             console.log('Error al hacer la llamada a la API:', error);
-            return null;
         }
     }
 
-    return { seatData, getCursos, deleteCurso, addCurso }
+    async function editCurso(curso: Curso) {
+        const requestOptions: RequestInit = {
+            method: 'PUT',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "nombreCurso": curso.nombreCurso
+            })
+        };
+
+        try {
+            const response = await fetch(`http://localhost:5183/Curso/${curso.id}`, requestOptions);
+
+            if (!response.ok) {
+                throw new Error('Error en la solicitud: ' + response.statusText);
+            }
+
+        } catch (error) {
+            console.log('Error al hacer la llamada a la API:', error);
+        }
+    }
+
+    return { seatData, getCursos, deleteCurso, addCurso, editCurso }
 });

@@ -10,6 +10,7 @@ import HomeView from '@/views/HomeView.vue'
 import CrearPasapalabraView from '@/views/CrearPasapalabraView.vue'
 import GameCardsView from '@/views/GameCardsView.vue'
 import TeacherGraphView from '@/views/TeacherGraphView.vue'
+import TipoJuegoView from '@/views/TipoJuegoView.vue'
 
 
 
@@ -29,7 +30,10 @@ const router = createRouter({
     {
       path: '/intranet/curso',
       name: 'curso',
-      component: CursoView
+      component: CursoView,
+      meta: {
+        showHeader: false,
+      }
     },
     {
       path: '/intranet/asignatura',
@@ -40,6 +44,17 @@ const router = createRouter({
       //   showHeader: true,
       //   requiresFetch: true
       // }
+      meta: {
+        showHeader: false,
+      }
+    },
+    {
+      path: '/intranet/tipojuego',
+      name: 'tipojuego',
+      component: TipoJuegoView,
+      meta: {
+        showHeader: false,
+      }
     },
     {
       path: '/login',

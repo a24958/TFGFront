@@ -51,6 +51,75 @@ export const gameTypeStore = defineStore('gameTypeFunctions', () => {
         }
     }
 
+    async function deleteTipoJuego(juegoId: number) {
+        const requestOptions: RequestInit = {
+            method: 'DELETE',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
 
-    return { seatData, getTipoJuego }
+        try {
+            const response = await fetch(`http://localhost:5183/TipoJuego/${juegoId}`, requestOptions);
+
+            if (!response.ok) {
+                throw new Error('Error en la solicitud: ' + response.statusText);
+            }
+
+        } catch (error) {
+            console.log('Error al hacer la llamada a la API:', error);
+        }
+    }
+
+    async function addTipoJuego(tipo: string) {
+        const requestOptions: RequestInit = {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "tipo": tipo
+            })
+        };
+
+        try {
+            const response = await fetch(`http://localhost:5183/TipoJuego`, requestOptions);
+
+            if (!response.ok) {
+                throw new Error('Error en la solicitud: ' + response.statusText);
+            }
+
+        } catch (error) {
+            console.log('Error al hacer la llamada a la API:', error);
+        }
+    }
+
+    async function editTipoJuego(tipoJuego: GameType) {
+        const requestOptions: RequestInit = {
+            method: 'PUT',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "tipo": tipoJuego.tipo
+            })
+        };
+
+        try {
+            const response = await fetch(`http://localhost:5183/TipoJuego/${tipoJuego.id}`, requestOptions);
+
+            if (!response.ok) {
+                throw new Error('Error en la solicitud: ' + response.statusText);
+            }
+
+        } catch (error) {
+            console.log('Error al hacer la llamada a la API:', error);
+        }
+    }
+
+
+    return { seatData, getTipoJuego, deleteTipoJuego, addTipoJuego, editTipoJuego }
 })

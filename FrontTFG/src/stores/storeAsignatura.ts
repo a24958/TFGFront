@@ -72,12 +72,6 @@ export const asignaturaStore = defineStore('asignaturaFunctions', () => {
                 throw new Error('Error en la solicitud: ' + response.statusText);
             }
 
-            // Si la solicitud fue exitosa, actualizar la lista de asignaturas
-            const index = asignaturas.findIndex(asignatura => asignatura.id === asignaturaId);
-            if (index !== -1) {
-                asignaturas.splice(index, 1);
-            }
-
         } catch (error) {
             console.log('Error al hacer la llamada a la API:', error);
         }
