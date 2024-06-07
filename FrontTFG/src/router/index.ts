@@ -118,8 +118,8 @@ const router = createRouter({
       }
     },
     {
-      path: '/crear-pasapalabra',
-      name: 'crear-pasapalabra',
+      path: '/teacher-intranet/crear-juegos',
+      name: 'teacher-intranet-crear-juegos',
       component: CrearPasapalabraView,
       meta: {
         showHeader: true,

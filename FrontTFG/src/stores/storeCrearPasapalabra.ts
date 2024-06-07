@@ -131,7 +131,7 @@ export const useJuegoStore = defineStore('juegoStore', () => {
     }
   }
 
-  async function enviarJson() {
+  async function enviarJson(preguntas: { letra: string; pregunta: string; respuesta: string; }[]) {
     const requestOptions: RequestInit = {
       method: 'POST',
       mode: 'cors',
@@ -140,10 +140,11 @@ export const useJuegoStore = defineStore('juegoStore', () => {
       }
     };
 
-    RequestBodyData.value.preguntas = RequestPreguntas.value;
+    RequestBodyData.value.preguntas = preguntas;
     var data = RequestBodyData.value;
 
     requestOptions.body = JSON.stringify(data);
+    console.log(requestOptions)
 
     try {
       const response = await fetch('http://localhost:5183/Pasapalabra', requestOptions);
