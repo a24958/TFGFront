@@ -10,3 +10,5 @@ import BaseView from './views/BaseView.vue';
 </template>
 
 <style scoped></style>
+
+

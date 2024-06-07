@@ -11,6 +11,8 @@ import CrearPasapalabraView from '@/views/CrearPasapalabraView.vue'
 import GameCardsView from '@/views/GameCardsView.vue'
 import TeacherGraphView from '@/views/TeacherGraphView.vue'
 import TipoJuegoView from '@/views/TipoJuegoView.vue'
+import UsuarioEstadisticasView from '@/views/UsuarioEstadisticasView.vue'
+
 
 
 
@@ -31,29 +33,32 @@ const router = createRouter({
       path: '/intranet/curso',
       name: 'curso',
       component: CursoView,
+      props: true,
       meta: {
-        showHeader: false,
+        showHeader: true,
+        requiresAdmin: true,
+        requiresAuth: true,
       }
     },
     {
       path: '/intranet/asignatura',
       name: 'asignatura',
       component: AsignaturasView,
-      // props: true,
-      // meta: {
-      //   showHeader: true,
-      //   requiresFetch: true
-      // }
       meta: {
-        showHeader: false,
+        showHeader: true,
+        requiresAdmin: true,
+        requiresAuth: true,
       }
     },
     {
       path: '/intranet/tipojuego',
       name: 'tipojuego',
       component: TipoJuegoView,
+      props: true,
       meta: {
-        showHeader: false,
+        showHeader: true,
+        requiresAdmin: true,
+        requiresAuth: true,
       }
     },
     {
@@ -77,7 +82,7 @@ const router = createRouter({
       name: 'intranet',
       component: IntranetView,
       meta: {
-        showHeader: false,
+        showHeader: true,
         requiresAdmin: true,
         requiresAuth: true,
       }
@@ -86,6 +91,16 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
+      meta: {
+        showHeader: true,
+        requiresAdmin: false,
+        requiresAuth: false,
+      }
+    },
+    {
+      path: '/usuario',
+      name: 'usuario',
+      component: UsuarioEstadisticasView,
       meta: {
         showHeader: true,
         requiresAdmin: false,
