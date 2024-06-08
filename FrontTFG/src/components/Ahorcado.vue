@@ -25,6 +25,14 @@ for (const curso of router.currentRoute.value.params.id
     id += curso
 }
 
+function normalizeString(str: string): string {
+    const equivalencias: { [key: string]: string } = {
+        'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u', 'ü': 'u',
+        'Á': 'A', 'É': 'E', 'Í': 'I', 'Ó': 'O', 'Ú': 'U', 'Ü': 'U'
+    };
+    
+    return str.split('').map(char => equivalencias[char] || char).join('');
+}
 onBeforeMount(async () => {
     await store.getAhorcadoById(id);
     if (seatData.value && seatData.value.length > 0) {
@@ -49,7 +57,7 @@ function intento(letra: string) {
     const indice = letrasDisponibles.value.indexOf(letra);
     if (indice > -1) {
         letrasDisponibles.value.splice(indice, 1);
-        if (palabra.value.includes(letra)) {
+        if (palabra.value.includes(normalizeString(letra))) {
             acierto.value = "Bien!";
             palabra.value.split('').forEach((char, index) => {
                 if (char === letra) {
@@ -119,6 +127,7 @@ h1.titulo {
     margin: 50px auto 80px auto;
     text-align: center;
     font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+    color: #3B82F6
 }
 
 h1#msg-final {
