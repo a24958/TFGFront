@@ -10,7 +10,7 @@ import UsuarioIntranetMenu from '@/components/general-utils/UsuarioIntranetMenu.
 const store = usuarioEstadisticasStore();
 
 const userData = localStorage.getItem('userData');
-const id = userData ? JSON.parse(userData).clase : null;
+const id = userData ? JSON.parse(userData).id : null;
 onBeforeMount(async () => {
     await store.getUsuarioById(id);
 });

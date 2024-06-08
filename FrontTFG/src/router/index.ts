@@ -14,6 +14,7 @@ import TipoJuegoView from '@/views/TipoJuegoView.vue'
 import UsuarioEstadisticasView from '@/views/UsuarioEstadisticasView.vue'
 
 import PasapalabraMultiplayerView from '@/views/PasapalabraMultiplayerView.vue'
+import AhorcadoView from '@/views/AhorcadoView.vue'
 
 
 
@@ -28,6 +29,14 @@ const router = createRouter({
       meta: {
         showHeader: false,
         requiresFetch: true
+      }
+    },
+    {
+      path: '/ahorcado/:id',
+      name: 'ahorcado',
+      component: AhorcadoView,
+      meta: {
+        showHeader: true,
       }
     },
     {

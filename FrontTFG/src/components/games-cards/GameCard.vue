@@ -82,22 +82,34 @@ function getCourseTypeText() {
 <template>
     <Card style="width: 25rem; overflow: hidden">
         <template #header>
-            <img alt="user header" src="/src/assets/images/pasapalabra.jpg" style="height: 220px; width: 400px;" />
+            <div v-if="idTipoJuego == 1">
+                <img alt="user header" src="/src/assets/images/pasapalabra.jpg" style="height: 220px; width: 400px;" />
+            </div>
+            <div v-if="idTipoJuego == 2">
+                <img alt="user header" src="/src/assets/images/ahorcado_card.jpg" style="height: 220px; width: 400px;" />
+            </div>
         </template>
         <template #title>
-            <div class="title_tag">
+            <div v-if="idTipoJuego == 1" class="title_tag">
                 {{ gameTypeText }}
+                <Tag :value="subjectTypeText" :severity="color"></Tag>
+            </div>
+            <div v-if="idTipoJuego == 2" class="title_tag">
+                Ahorcado
                 <Tag :value="subjectTypeText" :severity="color"></Tag>
             </div>
         </template>
         <template #subtitle>{{ temaJuego }}</template>
         <template #footer>
             <div class="card_footer">
-                <div class="flex gap-3 mt-1">
+                <div v-if="idTipoJuego == 1" class="flex gap-3 mt-1">
                     <RouterLink :to="`/pasapalabra/${id}`"><Button label="Jugar" class="w-full" />
                     </RouterLink>
                 </div>
-                <Rating v-model="props.idCurso" readonly :cancel="false" :stars="6" class="custom-rating"></Rating>
+                <div v-if="idTipoJuego == 2" class="flex gap-3 mt-1">
+                    <RouterLink :to="`/ahorcado/${id}`"><Button label="Jugar" class="w-full" />
+                    </RouterLink>
+                </div>
             </div>
         </template>
     </Card>
@@ -129,4 +141,5 @@ function getCourseTypeText() {
     align-items: center;
     justify-content: space-between;
 }
+
 </style>

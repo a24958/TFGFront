@@ -23,7 +23,7 @@ const TYPE_SUBJECT = 'Asignatura';
 const rawData = ref()
 
 const requestData = ref<BuscadorRequestBody>({
-    idTipoJuego: 1,
+    idTipoJuego: 0,
     idCurso: 0,
     idAsignatura: 0
 });

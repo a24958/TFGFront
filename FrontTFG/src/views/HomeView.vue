@@ -24,7 +24,7 @@ const load = async () => {
             <Card style="width: 25rem ; overflow: hidden">
                 <template  #header>
                     <div class="image">
-                        <img alt="user header" src="@/assets/images/pasapalabra.jpg" />
+                        <img alt="user header" src="@/assets/images/duelo.jpg" />
 
                     </div>
                 </template>
@@ -76,7 +76,7 @@ h2 {
         display: flex;
         flex-direction: row;
         align-items: stretch;
-        justify-content: space-between;
+        justify-content: space-around;
         margin-left: 16px;
         margin-right: 16px;
     }
