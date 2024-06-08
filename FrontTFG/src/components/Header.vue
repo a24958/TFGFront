@@ -1,23 +1,61 @@
 <script setup lang="ts">
-var userData = localStorage.getItem('userData');
-var rol = ''
-var nombre = ''
-if (userData != null) {
-    rol = JSON.parse(userData).rol;
-    nombre = JSON.parse(userData).nombre;
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+const logout = () => {
+    localStorage.removeItem('userData');
+    window.location.reload();
+    router.push('/login');
+
+};
+
+let userData = localStorage.getItem('userData');
+let rol = '';
+let nombre = '';
+if (userData) {
+    const parsedData = JSON.parse(userData);
+    rol = parsedData.rol;
+    nombre = parsedData.nombre;
 }
 </script>
 
+
 <template>
     <header>
-        <RouterLink to="/">HOME</RouterLink>
+        <RouterLink to="/"><img src="/src/assets/images/logo.png" alt=""></RouterLink>
 
-        <div v-if="rol !== 'Alumno'">
-            <RouterLink to="/login" id="responsive-item">O</RouterLink>
-            <RouterLink to="/login" id="no-responsive-item">Login</RouterLink>
+        <div class="rol" v-if="rol == 'Alumno'">
+            <RouterLink to="/usuario">
+                <div class="info-user">
+                    <img class="avatar" src="/src/assets/images/astronauta.png" alt="">
+                    {{ nombre }}
+                </div>
+            </RouterLink>
         </div>
         <div v-else>
-            <RouterLink to="/login">{{ nombre }}</RouterLink>
+            <div class="rol" v-if="rol == 'Admin'">
+                <RouterLink to="/intranet" id="responsive-item"> <img class="avatar"
+                        src="/src/assets/images/astronauta.png" alt=""> </RouterLink>
+                <RouterLink to="/intranet" id="no-responsive-item"> <img class="avatar"
+                        src="/src/assets/images/astronauta.png" alt=""> </RouterLink>
+
+            </div>
+            <div v-else>
+                <div class="rol" v-if="rol == 'Profesor'">
+                    <RouterLink to="/teacher-intranet/crear-juegos" id="responsive-item"> <img class="avatar"
+                            src="/src/assets/images/astronauta.png" alt=""> </RouterLink>
+                    <RouterLink to="/teacher-intranet/crear-juegos" id="no-responsive-item"> <img class="avatar"
+                            src="/src/assets/images/astronauta.png" alt=""> </RouterLink>
+
+                </div>
+                <div v-else>
+                    <RouterLink to="/login" id="responsive-item"> <img class="avatar"
+                            src="/src/assets/images/astronauta.png" alt=""> </RouterLink>
+                    <RouterLink to="/login" id="no-responsive-item"> <img class="avatar"
+                            src="/src/assets/images/astronauta.png" alt=""> </RouterLink>
+                </div>
+            </div>
 
         </div>
     </header>
@@ -29,13 +67,37 @@ header {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 8px;
+    padding: 13px;
     margin-left: 8px;
     margin-right: 8px;
 }
 
+.rol {
+    display: flex;
+    flex-direction: row;
+}
+
 a {
     text-decoration: none;
+}
+
+img {
+    height: 100px;
+}
+
+.avatar {
+    height: 50px;
+}
+
+.cerrar-sesion {
+    height: 50px;
+
+}
+
+.info-user {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #responsive-item {

@@ -28,18 +28,6 @@ const logout = () => {
                             alt="" height="24px" width="24px" @click="visible = !visible"></RouterLink>
                 </div>
             </template>
-            <RouterLink to="/teacher-intranet/crear-juegos">
-                <div class="list-item" @click="visible = !visible">
-                    <i class="pi pi-plus-circle"></i>
-                    <p>Crear Juegos</p>
-                </div>
-            </RouterLink>
-            <RouterLink to="/teacher-intranet/graphs">
-                <div class="list-item" @click="visible = !visible">
-                    <i class="pi pi-chart-bar"></i>
-                    <p>Estadísticas</p>
-                </div>
-            </RouterLink>
             <div class="list-item-exit-container">
                 <RouterLink to="/">
                     <div class="mt-auto" @click.native="logout" @click="visible = !visible">

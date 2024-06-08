@@ -2,9 +2,12 @@
 import GameGraph from '@/components/teachers-stadistics/GameGraph.vue';
 import ErrorsGraph from '@/components/teachers-stadistics/ErrorsGraph.vue';
 import CoursesGraph from '@/components/teachers-stadistics/CoursesGraph.vue';
+import TeacherIntranetMenu from '@/components/general-utils/TeacherIntranetMenu.vue';
+
 </script>
 
 <template>
+    <TeacherIntranetMenu></TeacherIntranetMenu>
     <h1>ESTADISTICAS GENERALES</h1>
     <div class="container">
         <div class="subjectGames">

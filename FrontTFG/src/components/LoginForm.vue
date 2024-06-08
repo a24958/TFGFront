@@ -5,6 +5,8 @@ import { useRouter } from 'vue-router';
 
 const store = loginStore();
 
+
+
 const user = ref('');
 const password = ref('');
 const errorMessage = ref('');
@@ -19,9 +21,14 @@ async function login() {
     if (userReturned && userReturned.email === userLogin) {
       // Check user role and redirect accordingly
       if (userReturned.rol === 'Profesor') {
-        await router.push('/crear-pasapalabra');
+        await router.push('/teacher-intranet/crear-juegos');
       } else {
-        await router.push('/');
+        if (userReturned.rol === 'Admin') {
+          await router.push('/intranet');
+        } else {
+          await router.push('/usuario');
+        }
+
       }
     } else {
       errorMessage.value = 'Usuario o contraseña incorrectos';

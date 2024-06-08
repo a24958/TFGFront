@@ -13,6 +13,7 @@ import InputIcon from 'primevue/inputicon';
 import Dialog from 'primevue/dialog';
 import IconField from 'primevue/iconfield';
 import FloatLabel from "primevue/floatlabel";
+import AdminIntranetMenu from '@/components/general-utils/AdminIntranetMenu.vue';
 
 const store = gameTypeStore();
 
@@ -109,6 +110,7 @@ const saveTipoJuego = async () => {
 </script>
 
 <template>
+    <AdminIntranetMenu></AdminIntranetMenu>
     <div class="card align-items-end">
         <DataTable ref="dt" :value="data" striped-rows v-model:selection="selectedTiposJuego" dataKey="id"
             :filters="filters">

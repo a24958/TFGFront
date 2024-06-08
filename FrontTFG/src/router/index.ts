@@ -45,7 +45,7 @@ const router = createRouter({
       component: CursoView,
       props: true,
       meta: {
-        showHeader: true,
+        showHeader: false,
         requiresAdmin: true,
         requiresAuth: true,
       }
@@ -55,7 +55,7 @@ const router = createRouter({
       name: 'asignatura',
       component: AsignaturasView,
       meta: {
-        showHeader: true,
+        showHeader: false,
         requiresAdmin: true,
         requiresAuth: true,
       }
@@ -66,7 +66,7 @@ const router = createRouter({
       component: TipoJuegoView,
       props: true,
       meta: {
-        showHeader: true,
+        showHeader: false,
         requiresAdmin: true,
         requiresAuth: true,
       }
@@ -92,7 +92,7 @@ const router = createRouter({
       name: 'intranet',
       component: IntranetView,
       meta: {
-        showHeader: true,
+        showHeader: false,
         requiresAdmin: true,
         requiresAuth: true,
       }
@@ -112,7 +112,7 @@ const router = createRouter({
       name: 'usuario',
       component: UsuarioEstadisticasView,
       meta: {
-        showHeader: true,
+        showHeader: false,
         requiresAdmin: false,
         requiresAuth: false,
       }
@@ -122,7 +122,7 @@ const router = createRouter({
       name: 'teacher-intranet-crear-juegos',
       component: CrearPasapalabraView,
       meta: {
-        showHeader: true,
+        showHeader: false,
         requiresAdmin: false,
         requiresAuth: true,
         requiresTeacher: true,
@@ -143,7 +143,7 @@ const router = createRouter({
       name: 'teacher-intranet-graphs',
       component: TeacherGraphView,
       meta: {
-        showHeader: true,
+        showHeader: false,
         requiresAdmin: false,
         requiresAuth: true,
         requiresTeacher: true,

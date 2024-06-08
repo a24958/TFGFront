@@ -19,52 +19,10 @@
             </div>
         </div>
         <div class="card">
-            <img src="/src/assets/images/pasapalabra.jpg" alt="" class="card-images">
+            <img src="/src/assets/images/ahorcado_card.jpg" alt="" class="card-images">
             <div class="card-texts">
-                <p>PASAPALABRA</p>
-                <p>¿Estas dispuesto a enfrentarte a este maravilloso reto?</p>
-                <div class="card-game-quality">
-                    <img src="/src//assets/images/estrella.png" alt="">
-                    <img src="/src//assets/images/estrella.png" alt="">
-                    <img src="/src//assets/images/estrella.png" alt="">
-                    <img src="/src//assets/images/estrella.png" alt="">
-                    <img src="/src//assets/images/estrella.png" alt="">
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <img src="/src/assets/images/pasapalabra.jpg" alt="" class="card-images">
-            <div class="card-texts">
-                <p>PASAPALABRA</p>
-                <p>¿Estas dispuesto a enfrentarte a este maravilloso reto?</p>
-                <div class="card-game-quality">
-                    <img src="/src//assets/images/estrella.png" alt="">
-                    <img src="/src//assets/images/estrella.png" alt="">
-                    <img src="/src//assets/images/estrella.png" alt="">
-                    <img src="/src//assets/images/estrella.png" alt="">
-                    <img src="/src//assets/images/estrella.png" alt="">
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <img src="/src/assets/images/pasapalabra.jpg" alt="" class="card-images">
-            <div class="card-texts">
-                <p>PASAPALABRA</p>
-                <p>¿Estas dispuesto a enfrentarte a este maravilloso reto?</p>
-                <div class="card-game-quality">
-                    <img src="/src//assets/images/estrella.png" alt="">
-                    <img src="/src//assets/images/estrella.png" alt="">
-                    <img src="/src//assets/images/estrella.png" alt="">
-                    <img src="/src//assets/images/estrella.png" alt="">
-                    <img src="/src//assets/images/estrella.png" alt="">
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <img src="/src/assets/images/pasapalabra.jpg" alt="" class="card-images">
-            <div class="card-texts">
-                <p>PASAPALABRA</p>
-                <p>¿Estas dispuesto a enfrentarte a este maravilloso reto?</p>
+                <p>AHORCADO</p>
+                <p>¿Podrás sobrevivir antes este complicado juego de letras?</p>
                 <div class="card-game-quality">
                     <img src="/src//assets/images/estrella.png" alt="">
                     <img src="/src//assets/images/estrella.png" alt="">
@@ -81,8 +39,9 @@
 .cards-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
+    
 }
 
 .card {

@@ -4,6 +4,8 @@ import { usuarioEstadisticasStore } from '@/stores/storeUsuarioEstadisticas';
 import { storeToRefs } from 'pinia';
 import { onBeforeMount } from 'vue';
 import router from "@/router";
+import UsuarioIntranetMenu from '@/components/general-utils/UsuarioIntranetMenu.vue';
+
 
 const store = usuarioEstadisticasStore();
 
@@ -19,6 +21,7 @@ const { seatData: data } = storeToRefs(store);
 </script>
 
 <template>
+    <UsuarioIntranetMenu></UsuarioIntranetMenu>
     <div v-for="element in data" :key="element.id">
         <UsuarioEstadisticas :id="element.id" :name="element.name" :email="element.email" :acertadas="element.acertadas" :media="element.media"
         :juegosCompletados="element.juegosCompletados" :falladas="element.falladas" :resultados="element.resultados" ></UsuarioEstadisticas>

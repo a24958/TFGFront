@@ -28,16 +28,22 @@ const logout = () => {
                             alt="" height="24px" width="24px" @click="visible = !visible"></RouterLink>
                 </div>
             </template>
-            <RouterLink to="/teacher-intranet/crear-juegos">
+            <RouterLink to="/intranet/curso">
                 <div class="list-item" @click="visible = !visible">
-                    <i class="pi pi-plus-circle"></i>
-                    <p>Crear Juegos</p>
+                    <i class="pi pi-graduation-cap"></i>
+                    <p>Cursos</p>
                 </div>
             </RouterLink>
-            <RouterLink to="/teacher-intranet/graphs">
+            <RouterLink to="/intranet/asignatura">
                 <div class="list-item" @click="visible = !visible">
-                    <i class="pi pi-chart-bar"></i>
-                    <p>Estadísticas</p>
+                    <i class="pi pi-list"></i>
+                    <p>Asignaturas</p>
+                </div>
+            </RouterLink>
+            <RouterLink to="/intranet/tipojuego">
+                <div class="list-item"  @click="visible = !visible">
+                    <i class="pi pi-slack"></i>
+                    <p>Tipo Juego</p>
                 </div>
             </RouterLink>
             <div class="list-item-exit-container">
