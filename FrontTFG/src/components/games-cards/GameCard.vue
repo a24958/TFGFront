@@ -86,7 +86,8 @@ function getCourseTypeText() {
                 <img alt="user header" src="/src/assets/images/pasapalabra.jpg" style="height: 220px; width: 400px;" />
             </div>
             <div v-if="idTipoJuego == 2">
-                <img alt="user header" src="/src/assets/images/ahorcado_card.jpg" style="height: 220px; width: 400px;" />
+                <img alt="user header" src="/src/assets/images/ahorcado_card.jpg"
+                    style="height: 220px; width: 400px;" />
             </div>
         </template>
         <template #title>
@@ -141,5 +142,4 @@ function getCourseTypeText() {
     align-items: center;
     justify-content: space-between;
 }
-
 </style>

@@ -11,46 +11,48 @@ const load = async () => {
 </script>
 
 <template>
-        <article class="card">
-            <Card style="width: 25rem ; overflow: hidden">
-                <template  #header>
-                    <div class="image">
-                        <img alt="user header" src="@/assets/images/pasapalabra.jpg" />
+    <article class="card">
+        <Card style="width: 25rem ; overflow: hidden">
+            <template #header>
+                <div class="image">
+                    <img alt="user header" src="@/assets/images/pasapalabra.jpg" />
 
-                    </div>
-                </template>
-                <template #title>Cursos</template>
-                <template #content>
-                    <p class="m-0">
-                        Añadir, Actualizar o Eliminar Asignaturas
-                    </p>
-                </template>
-                <template #footer>
-                    <div class="boton">
-                        <Button @click="load" label="Asignatura" class="w-full" />
-                    </div>
-                </template>
-            </Card>
-        </article>
+                </div>
+            </template>
+            <template #title>Asignaturas</template>
+            <template #content>
+                <p class="m-0">
+                    Añadir, Actualizar o Eliminar Asignaturas
+                </p>
+            </template>
+            <template #footer>
+                <div class="boton">
+                    <Button @click="load" label="Asignatura" class="w-full" />
+                </div>
+            </template>
+        </Card>
+    </article>
 </template>
 
 <style scoped>
+@media screen and (min-width: 800px) {}
 
-@media screen and (min-width: 800px) {
-
-}
-img{
+img {
     height: 250px;
 }
 
-.boton{
+.boton {
     display: flex;
     flex-direction: column;
 }
-.image{
+
+.image {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-</style>
 
+.card {
+    margin-bottom: 24px;
+}
+</style>

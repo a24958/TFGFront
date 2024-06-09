@@ -4,6 +4,7 @@ import AsignaturasCard from '@/components/intranet-admin/AsignaturasCard.vue';
 import CursosCard from '@/components/intranet-admin/CursosCard.vue';
 import TipoJuegoCard from '@/components/intranet-admin/TipoJuegoCard.vue';
 import AdminIntranetMenu from '@/components/general-utils/AdminIntranetMenu.vue';
+import UsuariosCard from '@/components/intranet-admin/UsuariosCard.vue';
 
 
 var userData = localStorage.getItem('userData');
@@ -26,6 +27,7 @@ if (userData != null) {
             <AsignaturasCard></AsignaturasCard>
             <CursosCard></CursosCard>
             <TipoJuegoCard></TipoJuegoCard>
+            <UsuariosCard></UsuariosCard>
         </article>
     </section>
 
@@ -45,7 +47,8 @@ section {
     align-items: center;
 }
 
-h2, h1 {
+h2,
+h1 {
     color: #3B82F6;
 }
 
@@ -59,16 +62,10 @@ h2, h1 {
         margin-right: 16px;
     }
 
-    article{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-    }
-
     .tarjetas {
         display: flex;
         flex-direction: row;
+        flex-wrap: wrap;
         justify-content: space-around;
     }
 }

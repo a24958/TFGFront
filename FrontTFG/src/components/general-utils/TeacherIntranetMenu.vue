@@ -24,8 +24,8 @@ const logout = () => {
         <Sidebar v-model:visible="visible">
             <template #header>
                 <div class="flex align-items-center gap-2">
-                    <RouterLink to="/"><img src="/src/assets/images/logo.png"
-                            alt="" height="24px" width="24px" @click="visible = !visible"></RouterLink>
+                    <RouterLink to="/"><img src="/src/assets/images/logo.png" alt="" height="24px" width="24px"
+                            @click="visible = !visible"></RouterLink>
                 </div>
             </template>
             <RouterLink to="/teacher-intranet/crear-juegos">
@@ -44,7 +44,7 @@ const logout = () => {
                 <RouterLink to="/">
                     <div class="mt-auto" @click.native="logout" @click="visible = !visible">
                         <i class="pi pi-sign-out"></i>
-                        <p>Salir</p>
+                        <p>Cerrar Sesión</p>
                     </div>
                 </RouterLink>
             </div>
@@ -68,7 +68,7 @@ const logout = () => {
     color: var(--primary-color);
 }
 
-img{
+img {
     height: 100px;
     width: 100px;
 }

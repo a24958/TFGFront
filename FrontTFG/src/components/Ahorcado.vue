@@ -30,7 +30,7 @@ function normalizeString(str: string): string {
         'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u', 'ü': 'u',
         'Á': 'A', 'É': 'E', 'Í': 'I', 'Ó': 'O', 'Ú': 'U', 'Ü': 'U'
     };
-    
+
     return str.split('').map(char => equivalencias[char] || char).join('');
 }
 onBeforeMount(async () => {
@@ -143,7 +143,7 @@ h1#msg-final {
     transform: scale(1) !important;
 }
 
-.flex-col{
+.flex-col {
     display: flex;
     flex-direction: column;
     align-items: center;

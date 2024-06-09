@@ -78,7 +78,7 @@ h2 {
 }
 
 img {
-    height: 250px;
+    height: 260px;
 }
 
 .boton {

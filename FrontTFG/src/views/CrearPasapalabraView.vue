@@ -6,6 +6,4 @@ import CrearPasapalabra from '@/components/CrearPasapalabra.vue';
   <CrearPasapalabra></CrearPasapalabra>
 </template>
 
-<style>
-/* Estilos globales si es necesario */
-</style>
+<style></style>

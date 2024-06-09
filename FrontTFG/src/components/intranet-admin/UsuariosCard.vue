@@ -4,9 +4,8 @@ import router from '@/router';
 import Card from 'primevue/card';
 
 
-
 const load = async () => {
-    router.push({ name: 'tipojuego' })
+    router.push({ name: 'usuarios' })
 }
 </script>
 
@@ -16,17 +15,18 @@ const load = async () => {
             <template #header>
                 <div class="image">
                     <img alt="user header" src="@/assets/images/pasapalabra.jpg" />
+
                 </div>
             </template>
-            <template #title>Tipo Juego</template>
+            <template #title>Usuarios</template>
             <template #content>
                 <p class="m-0">
-                    Añadir, Actualizar o Eliminar Tipos de Juego
+                    Añadir, Actualizar o Eliminar Usuarios
                 </p>
             </template>
             <template #footer>
                 <div class="boton">
-                    <Button @click="load" label="Tipo Juego" class="w-full" />
+                    <Button @click="load" label="Usuarios" class="w-full" />
                 </div>
             </template>
         </Card>

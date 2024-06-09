@@ -15,6 +15,7 @@ import UsuarioEstadisticasView from '@/views/UsuarioEstadisticasView.vue'
 
 import PasapalabraMultiplayerView from '@/views/PasapalabraMultiplayerView.vue'
 import AhorcadoView from '@/views/AhorcadoView.vue'
+import UsuariosView from '@/views/UsuariosView.vue'
 
 
 
@@ -73,6 +74,17 @@ const router = createRouter({
       path: '/intranet/tipojuego',
       name: 'tipojuego',
       component: TipoJuegoView,
+      props: true,
+      meta: {
+        showHeader: false,
+        requiresAdmin: true,
+        requiresAuth: true,
+      }
+    },
+    {
+      path: '/intranet/usuario',
+      name: 'usuarios',
+      component: UsuariosView,
       props: true,
       meta: {
         showHeader: false,

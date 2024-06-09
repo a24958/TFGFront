@@ -35,10 +35,8 @@ const confirm1 = () => {
     acceptLabel: 'Crear',
     accept: async () => {
       store.enviarJson(preguntas.value);
-
-      isValid.value = store.isFullRequestBodyCorrect();
-      if (isValid.value === true && fileName.value === 'data.csv') {
-
+      if (fileName.value === 'data.csv') {
+        toast.add({ severity: 'success', summary: 'Creado', detail: 'Se ha creado correctamente el pasapalabra', life: 3000 })
       } else {
         window.scrollTo({ top: 0, behavior: 'smooth' })
         toast.add({ severity: 'error', summary: 'Cancelado', detail: 'Algún campo del formulario esta vacío o archivo de preguntas incorrecto', life: 3000 });
@@ -327,7 +325,7 @@ h1 {
 .game_properties {
   display: flex;
   align-items: center;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-evenly;
 }
 
@@ -346,5 +344,12 @@ div {
 .actions-buttons div {
   margin-bottom: 0px;
   margin-right: 8px;
+}
+
+@media screen and (min-width: 950px) {
+  .game_properties {
+    flex-direction: row;
+    width: 500px;
+  }
 }
 </style>

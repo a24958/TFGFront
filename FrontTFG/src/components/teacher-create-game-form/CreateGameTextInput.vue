@@ -42,11 +42,13 @@ watch(value, (newValue, oldValue) => {
 </template>
 
 <style scoped>
-.biggOne {
-    width: 58rem;
-}
-
 .questionAnswer {
     width: 24rem;
+}
+
+@media screen and (min-width: 950px) {
+    .biggOne {
+        width: 58rem;
+    }
 }
 </style>
