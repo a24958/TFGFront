@@ -11,26 +11,26 @@ const load = async () => {
 </script>
 
 <template>
-    <article class="card">
-        <Card style="width: 25rem ; overflow: hidden">
-            <template #header>
-                <div class="image">
-                    <img alt="user header" src="@/assets/images/pasapalabra.jpg" />
-                </div>
-            </template>
-            <template #title>Tipo Juego</template>
-            <template #content>
-                <p class="m-0">
-                    Añadir, Actualizar o Eliminar Tipos de Juego
-                </p>
-            </template>
-            <template #footer>
-                <div class="boton">
-                    <Button @click="load" label="Tipo Juego" class="w-full" />
-                </div>
-            </template>
-        </Card>
-    </article>
+        <article class="card">
+            <Card style="width: 25rem ; overflow: hidden">
+                <template  #header>
+                    <div class="image">
+                        <img alt="user header" src="@/assets/images/tipoJuego.jpg" />
+                    </div>
+                </template>
+                <template #title>Tipo Juego</template>
+                <template #content>
+                    <p class="m-0">
+                        Añadir, Actualizar o Eliminar Tipos de Juego
+                    </p>
+                </template>
+                <template #footer>
+                    <div class="boton">
+                        <Button @click="load" label="Tipo Juego" class="w-full" />
+                    </div>
+                </template>
+            </Card>
+        </article>
 </template>
 
 <style scoped>
