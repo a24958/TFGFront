@@ -1,2 +1,2 @@
 # TFGFront
-Repositorio para el front del TFG
+Repositorio para el front del TFG.
