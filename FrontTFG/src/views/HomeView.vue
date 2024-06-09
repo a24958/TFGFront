@@ -14,15 +14,9 @@ const load = async () => {
 
 <template>
     <section>
-        <article>
-            <div class="test">
-                <h2>JUEGOS MAS POPULARES</h2>
-                <MostPopularGames></MostPopularGames>
-            </div>
-        </article>
         <article class="card">
             <Card style="width: 25rem ; overflow: hidden">
-                <template  #header>
+                <template #header>
                     <div class="image">
                         <img alt="user header" src="@/assets/images/duelo.jpg" />
 
@@ -47,17 +41,16 @@ const load = async () => {
             </div>
         </article>
     </section>
+    <article>
+        <div class="popular-games">
+            <h2>JUEGOS MAS POPULARES</h2>
+            <MostPopularGames></MostPopularGames>
+        </div>
+    </article>
 
 </template>
 
 <style scoped>
-.test {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-}
-
 section {
     display: flex;
     flex-direction: column;
@@ -65,38 +58,67 @@ section {
     justify-content: space-evenly;
     margin-bottom: 24px;
     margin-left: 24px;
+    margin-bottom: 36px;
 }
 
 h2 {
     color: #3B82F6;
 }
 
+.popular-games {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 16px;
+}
+
+.p-card p-component {
+    display: flex;
+    align-items: center;
+}
+
+img {
+    height: 250px;
+}
+
+.boton {
+    display: flex;
+    flex-direction: column;
+}
+
+.image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+article {
+    margin-bottom: 24px;
+}
+
 @media screen and (min-width: 800px) {
     section {
         display: flex;
         flex-direction: row;
-        align-items: stretch;
+        align-items: center;
         justify-content: space-around;
         margin-left: 16px;
         margin-right: 16px;
+        margin-bottom: 36px;
     }
-}
-.p-card p-component{
-    display: flex;
-    align-items: center;
-}
 
-img{
-    height: 250px;
-}
+    .popular-games div {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+    }
 
-.boton{
-    display: flex;
-    flex-direction: column;
-}
-.image{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    .popular-games div {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+    }
 }
 </style>
