@@ -369,7 +369,7 @@ function cuentaRegresiva(duracion: number) {
     </Dialog>
     <div v-if="showFirstsQuestions">
         <br>
-        <p class="title"> {{ name.replace('pasapalabra', '').toUpperCase() }} 1</p>
+        <p class="title"> {{ name.replace('pasapalabra', '').toUpperCase() }}</p>
         <div class="game-container">
             <div id="rosco-container">
                 <div class="current_letter_container">

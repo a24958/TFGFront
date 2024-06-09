@@ -2,6 +2,11 @@
 import { ref } from 'vue';
 import { loginStore } from '@/stores/storeLogin';
 import { useRouter } from 'vue-router';
+import Button from 'primevue/button';
+import FloatLabel from 'primevue/floatlabel';
+import InputText from 'primevue/inputtext';
+import Fieldset from 'primevue/fieldset';
+import Password from 'primevue/password';
 
 const store = loginStore();
 
@@ -9,7 +14,7 @@ const store = loginStore();
 
 const user = ref('');
 const password = ref('');
-const errorMessage = ref('');
+const isError = ref(false);
 const router = useRouter();
 
 async function login() {
@@ -31,35 +36,64 @@ async function login() {
 
       }
     } else {
-      errorMessage.value = 'Usuario o contraseña incorrectos';
+      isError.value = true;
     }
   } catch (error) {
-    errorMessage.value = 'Usuario o contraseña incorrectos';
+    isError.value = true;
   }
 }
 </script>
 
 <template>
-  <section class="login-section">
-    <h1>Login</h1>
-    <form class="login-formulario">
-      <label for="email">Email</label>
-      <input v-model="user" type="text" id="email" name="email" required>
+  <Fieldset>
+    <section class="login-section">
+      <h1>Login</h1>
 
-      <label for="contraseña">Contraseña</label>
-      <input v-model="password" type="password" id="contraseña" name="contraseña" required>
+      <div class="card flex justify-content-center">
+        <FloatLabel>
+          <InputText id="Correo" v-model="user" :invalid="isError" />
+          <label for="Correo">Correo</label>
+        </FloatLabel>
+      </div>
 
-      <button id="primary" @click.prevent="login()">Login</button>
-      <button id="secondary">
-        <RouterLink to="/register">Register</RouterLink>
-      </button>
-    </form>
-    <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
-  </section>
+      <div class="card flex justify-content-center">
+        <FloatLabel>
+          <Password v-model="password" inputId="Contraseña" :invalid="isError" :feedback="false" />
+          <label for="Contraseña">Contraseña</label>
+        </FloatLabel>
+      </div>
+
+      <div class="card flex justify-content-center">
+        <Button label="Iniciar Session" @click="login()" style="width: 15rem;" />
+      </div>
+
+      <div class="card flex justify-content-center" style="margin-bottom: 24px;">
+        <RouterLink to="/register">
+          <Button label="Registrarse" outlined style="width: 15rem;" />
+        </RouterLink>
+      </div>
+    </section>
+  </Fieldset>
 </template>
 
 <style scoped>
-.login-formulario #primary {
+h1 {
+  color: #3385D9;
+  font-size: 48px;
+  margin-bottom: 0px;
+}
+
+.login-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 415px;
+  width: 20rem;
+}
+
+
+/* .login-formulario #primary {
   padding: 8px;
   background-color: #3385D9;
   width: 350px;
@@ -157,5 +191,5 @@ async function login() {
   .login-section {
     margin-bottom: 325px;
   }
-}
+} */
 </style>
