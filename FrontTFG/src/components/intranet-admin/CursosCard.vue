@@ -15,7 +15,7 @@ const load = async () => {
             <Card style="width: 25rem ; overflow: hidden">
                 <template  #header>
                     <div class="image">
-                        <img alt="user header" src="@/assets/images/pasapalabra.jpg" />
+                        <img alt="user header" src="@/assets/images/curso.jpg" />
 
                     </div>
                 </template>
