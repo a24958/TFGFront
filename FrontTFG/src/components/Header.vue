@@ -86,12 +86,11 @@ img {
 }
 
 .avatar {
-    height: 50px;
+    height: 40px;
 }
 
 .cerrar-sesion {
     height: 50px;
-
 }
 
 .info-user {

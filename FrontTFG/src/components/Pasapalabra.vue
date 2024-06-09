@@ -8,6 +8,7 @@ import Button from 'primevue/button';
 import Toast from 'primevue/toast';
 import Dialog from 'primevue/dialog';
 import { useToast } from "primevue/usetoast";
+import router from '@/router';
 
 const toast = useToast();
 const store = pasapalabraStore();
@@ -50,6 +51,7 @@ const decrementTime = () => {
     if (timeValue.value > 0) {
         timeValue.value--;
     } else {
+        showDialog(null, null, null, AT_END);
         clearInterval(intervalId); // Detiene el intervalo cuando el tiempo llega a 0
     }
 };
@@ -108,6 +110,7 @@ function functionKeyUpEnter(value: string) {
     // Si todas las preguntas ya han sido contestadas, detener el juego
     if (todasContestadas) {
         stopStyleClass(idFirstQuestion.value)
+        showDialog(null, null, null, AT_END);
         return;
     }
 
@@ -152,12 +155,36 @@ function showDialog(letra: string | null, pregunta: string | null, respuesta: st
             headerText.value = `CON LA LETRA ${letra}`;
             dialogText.value = `${pregunta}: La respuestas correcta era ${respuesta}`
             dialogButtonLabel.value = "Continuar"
+            return;
+        case AT_END:
+            stopTimer();
+            showPanel.value = true;
+            headerText.value = `FINAL DEL JUEGO`;
+            dialogText.value = `Has acertado ${props.preguntas.filter((p) => p.acertado).length} / ${props.preguntas.length} preguntas`
+            dialogButtonLabel.value = "Volver a inicio"
+            return;
     }
 }
 
-function closeDialog() {
-    showPanel.value = !showPanel.value;
-    startTimer();
+async function closeDialog() {
+    if (props.preguntas.every(pregunta => pregunta.contestado) || timeValue.value === 0) {
+        let userData = localStorage.getItem('userData');
+        let id;
+        if (userData) {
+            const parsedData = JSON.parse(userData);
+            id = parsedData.id;
+
+            await store.postPasapalabraResults({
+                id: props.id,
+                name: props.name,
+                preguntas: props.preguntas
+            }, id,);
+        }
+        router.push('/');
+    } else {
+        showPanel.value = !showPanel.value;
+        startTimer();
+    }
 }
 
 function getWidthScreen() {

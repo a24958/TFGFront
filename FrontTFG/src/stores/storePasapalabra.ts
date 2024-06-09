@@ -95,5 +95,35 @@ export const pasapalabraStore = defineStore('pasapalabraStore', () => {
         }
     }
 
-    return { seatData, getPasapalabraById, getMultiplayerPasapalabra }
+    async function postPasapalabraResults(object: Pasapalabra, idUsuario: number) {
+        const requestOptions: RequestInit = {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        };
+
+        const data = {
+            id: object.id,
+            name: object.name,
+            preguntas: object.preguntas
+        };
+
+        requestOptions.body = JSON.stringify(data);
+
+        try {
+            const response = await fetch(`http://localhost:5183/Resultado?id=${idUsuario}`, requestOptions);
+
+            if (!response.ok) {
+                throw new Error('Error en la solicitud: ' + response.statusText);
+            }
+
+        } catch (error) {
+            console.log('Error al hacer la llamada a la API:', error);
+        }
+
+    }
+
+    return { seatData, getPasapalabraById, getMultiplayerPasapalabra, postPasapalabraResults }
 })
