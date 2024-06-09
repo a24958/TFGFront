@@ -25,7 +25,7 @@ export const cursoStore = defineStore('cursoFunctions', () => {
         };
 
         try {
-            const response = await fetch(`http://localhost:5183/Curso`, requestOptions);
+            const response = await fetch(`https://galactic2api.retocsv.es/Curso`, requestOptions);
 
             if (!response.ok) {
                 throw new Error('Error en la solicitud: ' + response.statusText);
@@ -54,7 +54,7 @@ export const cursoStore = defineStore('cursoFunctions', () => {
         };
 
         try {
-            const response = await fetch(`http://localhost:5183/Curso/${cursoId}`, requestOptions);
+            const response = await fetch(`https://galactic2api.retocsv.es/Curso/${cursoId}`, requestOptions);
 
             if (!response.ok) {
                 throw new Error('Error en la solicitud: ' + response.statusText);
@@ -78,7 +78,7 @@ export const cursoStore = defineStore('cursoFunctions', () => {
         };
 
         try {
-            const response = await fetch(`http://localhost:5183/Curso`, requestOptions);
+            const response = await fetch(`https://galactic2api.retocsv.es/Curso`, requestOptions);
 
             if (!response.ok) {
                 throw new Error('Error en la solicitud: ' + response.statusText);
@@ -102,7 +102,7 @@ export const cursoStore = defineStore('cursoFunctions', () => {
         };
 
         try {
-            const response = await fetch(`http://localhost:5183/Curso/${curso.id}`, requestOptions);
+            const response = await fetch(`https://galactic2api.retocsv.es/Curso/${curso.id}`, requestOptions);
 
             if (!response.ok) {
                 throw new Error('Error en la solicitud: ' + response.statusText);

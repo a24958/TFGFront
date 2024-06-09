@@ -26,7 +26,7 @@ export const gameTypeStore = defineStore('gameTypeFunctions', () => {
         };
 
         try {
-            const response = await fetch(`http://localhost:5183/TipoJuego/`, requestOptions);
+            const response = await fetch(`https://galactic2api.retocsv.es/TipoJuego/`, requestOptions);
 
             if (!response.ok) {
                 throw new Error('Error en la solicitud: ' + response.statusText);
@@ -61,7 +61,7 @@ export const gameTypeStore = defineStore('gameTypeFunctions', () => {
         };
 
         try {
-            const response = await fetch(`http://localhost:5183/TipoJuego/${juegoId}`, requestOptions);
+            const response = await fetch(`https://galactic2api.retocsv.es/TipoJuego/${juegoId}`, requestOptions);
 
             if (!response.ok) {
                 throw new Error('Error en la solicitud: ' + response.statusText);
@@ -85,7 +85,7 @@ export const gameTypeStore = defineStore('gameTypeFunctions', () => {
         };
 
         try {
-            const response = await fetch(`http://localhost:5183/TipoJuego`, requestOptions);
+            const response = await fetch(`https://galactic2api.retocsv.es/TipoJuego`, requestOptions);
 
             if (!response.ok) {
                 throw new Error('Error en la solicitud: ' + response.statusText);
@@ -109,7 +109,7 @@ export const gameTypeStore = defineStore('gameTypeFunctions', () => {
         };
 
         try {
-            const response = await fetch(`http://localhost:5183/TipoJuego/${tipoJuego.id}`, requestOptions);
+            const response = await fetch(`https://galactic2api.retocsv.es/TipoJuego/${tipoJuego.id}`, requestOptions);
 
             if (!response.ok) {
                 throw new Error('Error en la solicitud: ' + response.statusText);

@@ -35,7 +35,7 @@ export const asignaturaStore = defineStore('asignaturaFunctions', () => {
         };
 
         try {
-            const response = await fetch(`http://localhost:5183/Asignatura`, requestOptions);
+            const response = await fetch(`https://galactic2api.retocsv.es/Asignatura`, requestOptions);
 
             if (!response.ok) {
                 throw new Error('Error en la solicitud: ' + response.statusText);
@@ -66,7 +66,7 @@ export const asignaturaStore = defineStore('asignaturaFunctions', () => {
         };
 
         try {
-            const response = await fetch(`http://localhost:5183/Asignatura/${asignaturaId}`, requestOptions);
+            const response = await fetch(`https://galactic2api.retocsv.es/Asignatura/${asignaturaId}`, requestOptions);
 
             if (!response.ok) {
                 throw new Error('Error en la solicitud: ' + response.statusText);
@@ -90,7 +90,7 @@ export const asignaturaStore = defineStore('asignaturaFunctions', () => {
         };
 
         try {
-            const response = await fetch(`http://localhost:5183/Asignatura`, requestOptions);
+            const response = await fetch(`https://galactic2api.retocsv.es/Asignatura`, requestOptions);
 
             if (!response.ok) {
                 throw new Error('Error en la solicitud: ' + response.statusText);
@@ -114,7 +114,7 @@ export const asignaturaStore = defineStore('asignaturaFunctions', () => {
         };
 
         try {
-            const response = await fetch(`http://localhost:5183/Asignatura/${asignatura.id}`, requestOptions);
+            const response = await fetch(`https://galactic2api.retocsv.es/Asignatura/${asignatura.id}`, requestOptions);
 
             if (!response.ok) {
                 throw new Error('Error en la solicitud: ' + response.statusText);

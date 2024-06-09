@@ -227,7 +227,7 @@ const downloadCSV = () => {
 
 
 const handleFileUpload = (event: FileUploadSelectEvent) => {
-  var file = event.files && event.files.length > 0 ? event.files[0] : null;
+  const file = event.files && event.files.length > 0 ? event.files[0] : null;
 
   if (file && file.name === 'data.csv') {
     const reader = new FileReader();
@@ -235,20 +235,24 @@ const handleFileUpload = (event: FileUploadSelectEvent) => {
     reader.onload = () => {
       const csv = reader.result;
 
-      Papa.parse(csv, {
-        complete: (results: any) => {
-          const updatedData = results.data.map((item: any) => ({
-            ...item,
-            acertado: false,
-            contestado: false
-          }));
+      if (typeof csv === 'string') {
+        Papa.parse(csv, {
+          complete: (results: any) => {
+            const updatedData = results.data.map((item: any) => ({
+              ...item,
+              acertado: false,
+              contestado: false
+            }));
 
-          preguntas.value = updatedData;
-          fileName.value = file.name;
-          console.log(preguntas.value)
-        },
-        header: true,
-      });
+            preguntas.value = updatedData;
+            fileName.value = file.name;
+            console.log(preguntas.value);
+          },
+          header: true,
+        });
+      } else {
+        console.error('The file could not be read as a string.');
+      }
     };
 
     reader.readAsText(file);

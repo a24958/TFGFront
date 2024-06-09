@@ -147,7 +147,7 @@ export const useJuegoStore = defineStore('juegoStore', () => {
     console.log(requestOptions)
 
     try {
-      const response = await fetch('http://localhost:5183/Pasapalabra', requestOptions);
+      const response = await fetch('https://galactic2api.retocsv.es/Pasapalabra', requestOptions);
 
       if (!response.ok) {
         throw new Error('Error en la solicitud: ' + response.statusText);

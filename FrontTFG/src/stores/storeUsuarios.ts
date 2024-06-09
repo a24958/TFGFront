@@ -37,7 +37,7 @@ export const usuariosStore = defineStore('usuariosFunctions', () => {
         };
 
         try {
-            const response = await fetch(`http://localhost:5183/Usuario`, requestOptions);
+            const response = await fetch(`https://galactic2api.retocsv.es/Usuario`, requestOptions);
 
             if (!response.ok) {
                 throw new Error('Error en la solicitud: ' + response.statusText);
@@ -68,7 +68,7 @@ export const usuariosStore = defineStore('usuariosFunctions', () => {
         };
 
         try {
-            const response = await fetch(`http://localhost:5183/Asignatura/${usuarioId}`, requestOptions);
+            const response = await fetch(`https://galactic2api.retocsv.es/Asignatura/${usuarioId}`, requestOptions);
 
             if (!response.ok) {
                 throw new Error('Error en la solicitud: ' + response.statusText);
@@ -92,7 +92,7 @@ export const usuariosStore = defineStore('usuariosFunctions', () => {
         };
 
         try {
-            const response = await fetch(`http://localhost:5183/Usuario`, requestOptions);
+            const response = await fetch(`https://galactic2api.retocsv.es/Usuario`, requestOptions);
 
             if (!response.ok) {
                 throw new Error('Error en la solicitud: ' + response.statusText);
@@ -116,7 +116,7 @@ export const usuariosStore = defineStore('usuariosFunctions', () => {
         };
 
         try {
-            const response = await fetch(`http://localhost:5183/Usuario/${usuario.id}`, requestOptions);
+            const response = await fetch(`https://galactic2api.retocsv.es/Usuario/${usuario.id}`, requestOptions);
 
             if (!response.ok) {
                 throw new Error('Error en la solicitud: ' + response.statusText);

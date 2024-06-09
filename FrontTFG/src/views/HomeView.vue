@@ -36,6 +36,9 @@ const load = async () => {
             </Card>
         </article>
         <article>
+            <Button type="button" label="Multijugador" icon="" @click="load" style="width: 30rem; height: 5rem; " />
+        </article>
+        <article>
             <div style="width: 400px;">
                 <GameForm></GameForm>
             </div>

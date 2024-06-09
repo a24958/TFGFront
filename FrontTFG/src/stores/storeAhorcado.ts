@@ -35,7 +35,7 @@ export const ahorcadoStore = defineStore('ahorcadoStore', () => {
         };
 
         try {
-            const response = await fetch(`http://localhost:5183/Ahorcado/${parseInt(Id)}`, requestOptions);
+            const response = await fetch(`https://galactic2api.retocsv.es/Ahorcado/${parseInt(Id)}`, requestOptions);
 
             if (!response.ok) {
                 throw new Error('Error en la solicitud: ' + response.statusText);
@@ -58,7 +58,7 @@ export const ahorcadoStore = defineStore('ahorcadoStore', () => {
         }
     }
 
-    
+
 
     return { seatData, getAhorcadoById }
 })

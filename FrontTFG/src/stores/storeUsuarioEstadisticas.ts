@@ -43,7 +43,7 @@ export const usuarioEstadisticasStore = defineStore('usuarioEstadisticasStore', 
         };
 
         try {
-            const response = await fetch(`http://localhost:5183/Usuario/${parseInt(Id)}`, requestOptions);
+            const response = await fetch(`https://galactic2api.retocsv.es/Usuario/${parseInt(Id)}`, requestOptions);
 
             if (!response.ok) {
                 throw new Error('Error en la solicitud: ' + response.statusText);

@@ -38,7 +38,7 @@ export const pasapalabraStore = defineStore('pasapalabraStore', () => {
         };
 
         try {
-            const response = await fetch(`http://localhost:5183/Pasapalabra/${parseInt(Id)}`, requestOptions);
+            const response = await fetch(`https://galactic2api.retocsv.es/Pasapalabra/${parseInt(Id)}`, requestOptions);
 
             if (!response.ok) {
                 throw new Error('Error en la solicitud: ' + response.statusText);
@@ -70,7 +70,7 @@ export const pasapalabraStore = defineStore('pasapalabraStore', () => {
         };
 
         try {
-            const response = await fetch(`http://localhost:5183/multijugador`, requestOptions);
+            const response = await fetch(`https://galactic2api.retocsv.es/multijugador`, requestOptions);
 
             if (!response.ok) {
                 throw new Error('Error en la solicitud: ' + response.statusText);

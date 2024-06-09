@@ -43,14 +43,14 @@ export const resultadosStore = defineStore('resultadosStore', () => {
         };
 
         try {
-            const response = await fetch(`http://localhost:5183/Resultado/asignaturas/${parseInt(Id)}`, requestOptions);
+            const response = await fetch(`https://galactic2api.retocsv.es/Resultado/asignaturas/${parseInt(Id)}`, requestOptions);
 
             if (!response.ok) {
                 throw new Error('Error en la solicitud: ' + response.statusText);
             }
 
             const json = await response.json();
-            
+
             if (Array.isArray(json) && json.every(item => typeof item === 'number')) {
                 setData2(json);
             } else {
@@ -72,14 +72,14 @@ export const resultadosStore = defineStore('resultadosStore', () => {
         };
 
         try {
-            const response = await fetch(`http://localhost:5183/Resultado/cursos/${parseInt(Id)}`, requestOptions);
+            const response = await fetch(`https://galactic2api.retocsv.es/Resultado/cursos/${parseInt(Id)}`, requestOptions);
 
             if (!response.ok) {
                 throw new Error('Error en la solicitud: ' + response.statusText);
             }
 
             const json = await response.json();
-            
+
             if (Array.isArray(json) && json.every(item => typeof item === 'number')) {
                 setData(json);
             } else {
@@ -101,7 +101,7 @@ export const resultadosStore = defineStore('resultadosStore', () => {
         };
 
         try {
-            const response = await fetch(`http://localhost:5183/Resultado/profesor/${parseInt(Id)}`, requestOptions);
+            const response = await fetch(`https://galactic2api.retocsv.es/Resultado/profesor/${parseInt(Id)}`, requestOptions);
 
             if (!response.ok) {
                 throw new Error('Error en la solicitud: ' + response.statusText);
