@@ -9,6 +9,7 @@ import Toast from 'primevue/toast';
 import Dialog from 'primevue/dialog';
 import { useToast } from "primevue/usetoast";
 import { isReactive } from 'vue';
+import router from '@/router';
 
 const toast = useToast();
 const store = pasapalabraStore();
@@ -51,41 +52,60 @@ const timeValue1 = ref(300);
 const timeValue2 = ref(300);
 const showFirstsQuestions = ref(true);
 
-let intervalId1 = 0;
-let intervalId2 = 1;
-
+let intervalId1: number | null = null;
+let intervalId2: number | null = null;
 
 const decrementTime = () => {
     if (showFirstsQuestions.value) {
         if (timeValue1.value > 0) {
             timeValue1.value--;
         } else {
-            clearInterval(intervalId1);
+            showFirstsQuestions.value = !showFirstsQuestions.value;
+            if (timeValue1.value === 0 && timeValue2.value === 0) {
+                showDialog(null, null, null, AT_END);
+                return;
+            }
+            showCountDownDialog();
+            clearInterval(intervalId1!);
+            intervalId1 = null;
         }
     } else {
         if (timeValue2.value > 0) {
             timeValue2.value--;
         } else {
-            clearInterval(intervalId2);
+            showFirstsQuestions.value = !showFirstsQuestions.value;
+            if (timeValue1.value === 0 && timeValue2.value === 0) {
+                showDialog(null, null, null, AT_END);
+                return;
+            }
+            showCountDownDialog();
+            clearInterval(intervalId2!);
+            intervalId2 = null;
         }
     }
 };
 
 const startTimer = () => {
     if (showFirstsQuestions.value) {
-        intervalId1 = setInterval(decrementTime, 1000);
+        if (!intervalId1) {
+            intervalId1 = setInterval(decrementTime, 1000);
+        }
     } else {
-        intervalId2 = setInterval(decrementTime, 1000);
+        if (!intervalId2) {
+            intervalId2 = setInterval(decrementTime, 1000);
+        }
     }
 };
 
 const stopTimer = () => {
-    if (showFirstsQuestions.value) {
-        clearInterval(intervalId1); // Detiene el intervalo manualmente
-    } else {
-        clearInterval(intervalId2); // Detiene el intervalo manualmente
+    if (intervalId1) {
+        clearInterval(intervalId1);
+        intervalId1 = null;
     }
-
+    if (intervalId2) {
+        clearInterval(intervalId2);
+        intervalId2 = null;
+    }
 };
 
 function stopStyleClass(index: number) {
@@ -106,12 +126,11 @@ function toggleClass(currentIndex: number, nextIndex: number) {
     next?.classList.add('parpadeo');
 }
 
-function nextQuestion(preguntas: PreguntaPasapalabra[]) {
+function nextQuestion(preguntas: PreguntaPasapalabra[], placeWhereIsCall: string | null) {
     if (showFirstsQuestions.value) {
         let currentIndex = idFirstQuestion1.value;
         let nextIndex = (currentIndex + 1) % preguntas.length;
 
-        // Avanzar al siguiente índice no contestado
         while (preguntas[nextIndex].contestado) {
             nextIndex = (nextIndex + 1) % preguntas.length;
             if (nextIndex === currentIndex) {
@@ -119,23 +138,27 @@ function nextQuestion(preguntas: PreguntaPasapalabra[]) {
             }
         }
 
-        // Si se llegó al final y todas las preguntas están contestadas, mostrar el mensaje de "Has acabado"
         if (nextIndex === currentIndex && preguntas[nextIndex].contestado) {
             toast.add({ severity: 'info', summary: 'Fin', detail: 'Has contestado a todas las preguntas', life: 3000 });
             stopStyleClass(idFirstQuestion1.value);
-            return;
+            showDialog(null, null, null, AT_END);
+        } else {
+            idFirstQuestion1.value = nextIndex;
+            inputValue1.value = '';
+            toggleClass(currentIndex, nextIndex);
+
+            if (placeWhereIsCall === 'button' || placeWhereIsCall === 'pasapalabra') {
+                if (!(props.preguntas2.every(pregunta => pregunta.contestado)) && timeValue2.value > 0) {
+                    stopTimer();
+                    showCountDownDialog();
+                    showFirstsQuestions.value = !showFirstsQuestions.value;
+                }
+            }
         }
-
-        // Si no se ha llegado al final o aún quedan preguntas por contestar, cambiar la pregunta
-        idFirstQuestion1.value = nextIndex;
-        inputValue1.value = '';
-        toggleClass(currentIndex, nextIndex);
-
     } else {
         let currentIndex = idFirstQuestion2.value;
         let nextIndex = (currentIndex + 1) % preguntas.length;
 
-        // Avanzar al siguiente índice no contestado
         while (preguntas[nextIndex].contestado) {
             nextIndex = (nextIndex + 1) % preguntas.length;
             if (nextIndex === currentIndex) {
@@ -143,54 +166,71 @@ function nextQuestion(preguntas: PreguntaPasapalabra[]) {
             }
         }
 
-        // Si se llegó al final y todas las preguntas están contestadas, mostrar el mensaje de "Has acabado"
         if (nextIndex === currentIndex && preguntas[nextIndex].contestado) {
             toast.add({ severity: 'info', summary: 'Fin', detail: 'Has contestado a todas las preguntas', life: 3000 });
             stopStyleClass(idFirstQuestion2.value);
-            return;
-        }
+            showDialog(null, null, null, AT_END);
+        } else {
+            idFirstQuestion2.value = nextIndex;
+            inputValue2.value = '';
+            toggleClass(currentIndex, nextIndex);
 
-        // Si no se ha llegado al final o aún quedan preguntas por contestar, cambiar la pregunta
-        idFirstQuestion2.value = nextIndex;
-        inputValue2.value = '';
-        toggleClass(currentIndex, nextIndex);
+            if (placeWhereIsCall === 'button' || placeWhereIsCall === 'pasapalabra') {
+                if (!(props.preguntas1.every(pregunta => pregunta.contestado)) && timeValue1.value > 0) {
+                    stopTimer();
+                    showCountDownDialog();
+                    showFirstsQuestions.value = !showFirstsQuestions.value;
+                }
+            }
+        }
     }
 }
 
 function functionKeyUpEnter(preguntas: PreguntaPasapalabra[], value: string) {
-    // Verificar si todas las preguntas ya han sido contestadas
     const todasContestadas = preguntas.every(pregunta => pregunta.contestado);
+    const ambasPreguntasContestadas = props.preguntas1.every(pregunta => pregunta.contestado) && props.preguntas2.every(pregunta => pregunta.contestado);
 
-    // Si todas las preguntas ya han sido contestadas, detener el juego
+    if (ambasPreguntasContestadas) {
+        showDialog(null, null, null, AT_END);
+        return;
+    }
+
     if (todasContestadas) {
         if (showFirstsQuestions.value) {
             stopStyleClass(idFirstQuestion1.value);
+            return;
         } else {
             stopStyleClass(idFirstQuestion2.value);
+            return;
         }
-
-        showDialog(null, null, null, AT_END)
     }
 
-    // Resto del código para comprobar la respuesta y avanzar a la siguiente pregunta
     if (showFirstsQuestions.value) {
         if (value.trim().toLowerCase() === preguntas[idFirstQuestion1.value].respuesta.trim().toLowerCase()) {
             preguntas[idFirstQuestion1.value].acertado = true;
             preguntas[idFirstQuestion1.value].contestado = true;
             acierto.value!.currentTime = 0.5;
-            acierto.value?.play()
-            nextQuestion(preguntas);
+            acierto.value?.play();
+            nextQuestion(preguntas, null);
             inputValue1.value = '';
         } else if (value.trim().toLowerCase() === '') {
-            nextQuestion(preguntas);
-            showFirstsQuestions.value = !showFirstsQuestions.value
+            nextQuestion(preguntas, 'pasapalabra');
+            if (!(props.preguntas2.every(pregunta => pregunta.contestado)) && timeValue2.value > 0) {
+                stopTimer();
+                showCountDownDialog();
+            }
+
         } else {
             preguntas[idFirstQuestion1.value].acertado = false;
             preguntas[idFirstQuestion1.value].contestado = true;
             fallo.value!.currentTime = 0.75;
             fallo.value?.play();
-            showDialog(preguntas[idFirstQuestion1.value].letra, preguntas[idFirstQuestion1.value].pregunta, preguntas[idFirstQuestion1.value].respuesta, AT_ERRORR)
-            nextQuestion(preguntas);
+            showDialog(preguntas[idFirstQuestion1.value].letra, preguntas[idFirstQuestion1.value].pregunta, preguntas[idFirstQuestion1.value].respuesta, AT_ERRORR);
+            nextQuestion(preguntas, null);
+            if (props.preguntas2.every(pregunta => pregunta.contestado) && timeValue2.value > 0) {
+                showCountDownDialog();
+                showFirstsQuestions.value = !showFirstsQuestions.value;
+            }
             inputValue1.value = '';
         }
     } else {
@@ -198,19 +238,26 @@ function functionKeyUpEnter(preguntas: PreguntaPasapalabra[], value: string) {
             preguntas[idFirstQuestion2.value].acertado = true;
             preguntas[idFirstQuestion2.value].contestado = true;
             acierto.value!.currentTime = 0.5;
-            acierto.value?.play()
-            nextQuestion(preguntas);
+            acierto.value?.play();
+            nextQuestion(preguntas, null);
             inputValue2.value = '';
         } else if (value.trim().toLowerCase() === '') {
-            nextQuestion(preguntas);
-            showFirstsQuestions.value = !showFirstsQuestions.value
+            nextQuestion(preguntas, 'pasapalabra');
+            if (!(props.preguntas1.every(pregunta => pregunta.contestado)) && timeValue1.value > 0) {
+                stopTimer();
+                showCountDownDialog();
+            }
         } else {
             preguntas[idFirstQuestion2.value].acertado = false;
             preguntas[idFirstQuestion2.value].contestado = true;
             fallo.value!.currentTime = 0.75;
             fallo.value?.play();
-            showDialog(preguntas[idFirstQuestion2.value].letra, preguntas[idFirstQuestion2.value].pregunta, preguntas[idFirstQuestion2.value].respuesta, AT_ERRORR)
-            nextQuestion(preguntas);
+            showDialog(preguntas[idFirstQuestion2.value].letra, preguntas[idFirstQuestion2.value].pregunta, preguntas[idFirstQuestion2.value].respuesta, AT_ERRORR);
+            nextQuestion(preguntas, null);
+            if (props.preguntas1.every(pregunta => pregunta.contestado) && timeValue1.value > 0) {
+                showCountDownDialog();
+                showFirstsQuestions.value = !showFirstsQuestions.value;
+            }
             inputValue2.value = '';
         }
     }
@@ -226,45 +273,57 @@ const showCountDown = ref(false);
 const countDownText = ref('');
 const countDown = ref(5);
 
-
 function showDialog(letra: string | null, pregunta: string | null, respuesta: string | null, timeWhenIsDisplay: number) {
     switch (timeWhenIsDisplay) {
         case AT_START:
             stopTimer();
             showPanel.value = true;
             headerText.value = "ATENCIÓN";
-            dialogText.value = "Le recordamos algo básico y sencillo del juego, las letras MAYÚSCULAS y letras MINÚSCULAS NO SON MOTIVO DE ERROR, pero SI QUE LOS SON LAS TILDES. Para comenzar presione el botón de EMPEZAR"
+            dialogText.value = "Le recordamos algo básico y sencillo del juego, las letras MAYÚSCULAS y letras MINÚSCULAS NO SON MOTIVO DE ERROR, pero SI QUE LOS SON LAS TILDES. Para comenzar presione el botón de EMPEZAR";
             dialogButtonLabel.value = "Empezar";
             return;
         case AT_ERRORR:
             stopTimer();
             showPanel.value = true;
             headerText.value = `CON LA LETRA ${letra}`;
-            dialogText.value = `${pregunta}: La respuestas correcta era ${respuesta}`
-            dialogButtonLabel.value = "Continuar"
+            dialogText.value = `${pregunta}: La respuestas correcta era ${respuesta}`;
+            dialogButtonLabel.value = "Continuar";
             return;
         case AT_END:
             stopTimer();
             showPanel.value = true;
             headerText.value = `FINAL`;
-            dialogText.value = `EL JUGADOR 1 HA ACERTADO X PREGUNTAS\n EL JUGADOR 2 HA ACERTADO Y PREGUNTAS`
-            dialogButtonLabel.value = "Continuar"
+            dialogText.value = `EL JUGADOR 1 HA ACERTADO ${props.preguntas1.filter((p) => p.acertado).length} / ${props.preguntas1.length} PREGUNTAS\n EL JUGADOR 2 HA ACERTADO ${props.preguntas2.filter((p) => p.acertado).length} / ${props.preguntas2.length} PREGUNTAS`;
+            dialogButtonLabel.value = "Continuar";
+            return;
     }
 }
 
 function showCountDownDialog() {
+    stopTimer();
     cuentaRegresiva(5);
     showCountDown.value = true;
-    countDownText.value = `TURNO DEL JUGADOR ${showFirstsQuestions.value ? 2 : 1}`
+    countDownText.value = `TURNO DEL JUGADOR ${showFirstsQuestions.value === true ? 1 : 2}`;
     return;
 }
 
 function closeDialog() {
     stopTimer();
     showPanel.value = !showPanel.value;
-    showCountDownDialog();
-    showFirstsQuestions.value = !showFirstsQuestions.value
-
+    if (props.preguntas1.every((p) => p.acertado) || props.preguntas2.every((p) => p.acertado) || (props.preguntas1.every((p) => p.contestado) && props.preguntas2.every((p) => p.contestado)) || (timeValue1.value === 0 && timeValue2.value === 0)) {
+        router.push('/');
+    } else {
+        if ((!(props.preguntas1.every((pregunta) => pregunta.contestado)) && timeValue1.value > 0) && (!(props.preguntas2.every((pregunta) => pregunta.contestado)) && timeValue2.value > 0)) {
+            showCountDownDialog();
+            if (!isFirstTiem.value) {
+                showFirstsQuestions.value = !showFirstsQuestions.value;
+            } else {
+                isFirstTiem.value = false;
+            }
+        } else {
+            startTimer();
+        }
+    }
 }
 
 function getWidthScreen() {
@@ -274,8 +333,10 @@ function getWidthScreen() {
 function cuentaRegresiva(duracion: number) {
     let contador = duracion;
 
+    stopTimer();
+
     const intervalo = setInterval(() => {
-        countDown.value = contador
+        countDown.value = contador;
         if (contador === 0) {
             clearInterval(intervalo);
             showCountDown.value = false;
@@ -308,7 +369,7 @@ function cuentaRegresiva(duracion: number) {
     </Dialog>
     <div v-if="showFirstsQuestions">
         <br>
-        <p class="title"> {{ name.replace('pasapalabra', '').toUpperCase() }}</p>
+        <p class="title"> {{ name.replace('pasapalabra', '').toUpperCase() }} 1</p>
         <div class="game-container">
             <div id="rosco-container">
                 <div class="current_letter_container">
@@ -317,7 +378,7 @@ function cuentaRegresiva(duracion: number) {
                 </div>
                 <ul id="rosco">
                     <li v-for="(element, index) in props.preguntas1" :id="(index).toString()"
-                        :class="{ 'parpadeo': element.id === props.preguntas1[0].id }">
+                        :class="{ 'parpadeo': index === idFirstQuestion1 }">
                         <PreguntaPasapalabra :letra="element.letra" :contestado="element.contestado"
                             :acertado="element.acertado">
                         </PreguntaPasapalabra>
@@ -332,7 +393,7 @@ function cuentaRegresiva(duracion: number) {
                 </div>
                 <div class="card flex justify-content-center">
                     <Button :label="getWidthScreen() < 700 ? 'Pasa' : 'Pasapalabra'"
-                        @click="nextQuestion(props.preguntas1)" severity="secondary" class="button_style" />
+                        @click="nextQuestion(props.preguntas1, 'button')" severity="secondary" class="button_style" />
                 </div>
                 <div class="time">
                     <p>{{ timeValue1 }}</p>
@@ -351,7 +412,7 @@ function cuentaRegresiva(duracion: number) {
                 </div>
                 <ul id="rosco">
                     <li v-for="(element, index) in props.preguntas2" :id="(index).toString()"
-                        :class="{ 'parpadeo': element.id === props.preguntas2[0].id }">
+                        :class="{ 'parpadeo': index === idFirstQuestion2 }">
                         <PreguntaPasapalabra :letra="element.letra" :contestado="element.contestado"
                             :acertado="element.acertado">
                         </PreguntaPasapalabra>
@@ -366,7 +427,7 @@ function cuentaRegresiva(duracion: number) {
                 </div>
                 <div class="card flex justify-content-center">
                     <Button :label="getWidthScreen() < 700 ? 'Pasa' : 'Pasapalabra'"
-                        @click="nextQuestion(props.preguntas2)" severity="secondary" class="button_style" />
+                        @click="nextQuestion(props.preguntas2, 'button')" severity="secondary" class="button_style" />
                 </div>
                 <div class="time">
                     <p>{{ timeValue2 }}</p>
