@@ -82,7 +82,6 @@ function nextQuestion() {
     let currentIndex = idFirstQuestion.value;
     let nextIndex = (currentIndex + 1) % props.preguntas.length;
 
-    // Avanzar al siguiente índice no contestado
     while (props.preguntas[nextIndex].contestado) {
         nextIndex = (nextIndex + 1) % props.preguntas.length;
         if (nextIndex === currentIndex) {
@@ -90,31 +89,26 @@ function nextQuestion() {
         }
     }
 
-    // Si se llegó al final y todas las preguntas están contestadas, mostrar el mensaje de "Has acabado"
     if (nextIndex === currentIndex && props.preguntas[nextIndex].contestado) {
         toast.add({ severity: 'info', summary: 'Fin', detail: 'Has contestado a todas las preguntas', life: 3000 });
         stopStyleClass(idFirstQuestion.value);
         return;
     }
 
-    // Si no se ha llegado al final o aún quedan preguntas por contestar, cambiar la pregunta
     idFirstQuestion.value = nextIndex;
     inputValue.value = '';
     toggleClass(currentIndex, nextIndex);
 }
 
 function functionKeyUpEnter(value: string) {
-    // Verificar si todas las preguntas ya han sido contestadas
     const todasContestadas = props.preguntas.every(pregunta => pregunta.contestado);
 
-    // Si todas las preguntas ya han sido contestadas, detener el juego
     if (todasContestadas) {
         stopStyleClass(idFirstQuestion.value)
         showDialog(null, null, null, AT_END);
         return;
     }
 
-    // Resto del código para comprobar la respuesta y avanzar a la siguiente pregunta
     if (value.trim().toLowerCase() === props.preguntas[idFirstQuestion.value].respuesta.trim().toLowerCase()) {
         props.preguntas[idFirstQuestion.value].acertado = true;
         props.preguntas[idFirstQuestion.value].contestado = true;
